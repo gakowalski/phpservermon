@@ -323,6 +323,9 @@ class Installer {
 		if (version_compare($version_from, '3.4.0', '<')) {
 			$this->upgrade340();
 		}
+        if (version_compare($version_from, '3.5.0', '<')) {
+            $this->upgrade350();
+        }
 		psm_update_conf('version', $version_to);
 	}
 
@@ -573,4 +576,24 @@ class Installer {
 		$this->execSQL($queries);
 		$this->log('Combined notifications enabled. Check out the config page for more info.');
 	}
+
+
+    /**
+     * Upgrade for v3.5.0 release
+     */
+    protected function upgrade350() {
+        $queries = array();
+        $queries[] = "CREATE TABLE `".PSM_DB_PREFIX."environments` (`environment_id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(45) NOT NULL, PRIMARY KEY (`environment_id`));";
+        $queries[] = "INSERT INTO `".PSM_DB_PREFIX."environments` (`name`) VALUES ('Default');";
+        $queries[] = "ALTER TABLE `".PSM_DB_PREFIX."servers` ADD COLUMN `environment_id` INT NOT NULL AFTER `server_id`;";
+        $queries[] = "UPDATE `".PSM_DB_PREFIX."servers` SET `environment_id`=1 WHERE `server_id` > 0;";
+        $this->execSQL($queries);
+        $this->log('Environments functionality upgrade/update scripts.');
+    }
+
 }
+
+
+$queries[] = "UPDATE `".PSM_DB_PREFIX."config` SET `value`='bg_BG' WHERE `key`='language' AND `value`='bg';";
+
+

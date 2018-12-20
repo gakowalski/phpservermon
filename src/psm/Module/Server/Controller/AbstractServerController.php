@@ -52,6 +52,9 @@ abstract class AbstractServerController extends AbstractController {
 						AND `us`.`server_id`=`s`.`server_id`
 						)";
 		}
+		$sql_environments_join = "JOIN `".PSM_DB_PREFIX."environments` AS `e` ON (
+						 `e`.`environment_id`=`s`.`environment_id`
+						)";
 		if ($server_id !== null) {
 			$server_id = intval($server_id);
 			$sql_where = "WHERE `s`.`server_id`={$server_id} ";
@@ -90,9 +93,12 @@ abstract class AbstractServerController extends AbstractController {
 					`s`.`website_password`,
 					`s`.`last_error`,
 					`s`.`last_error_output`,
-					`s`.`last_output`
+					`s`.`last_output`,
+					`s`.`environment_id`,
+					`e`.`name` as environment_name
 				FROM `".PSM_DB_PREFIX."servers` AS `s`
 				{$sql_join}
+				{$sql_environments_join}
 				{$sql_where}
 				ORDER BY `active` ASC, `status` DESC, `label` ASC";
 		$servers = $this->db->query($sql);
@@ -147,4 +153,10 @@ abstract class AbstractServerController extends AbstractController {
 
 		return $server;
 	}
+
+
+	protected function getEnvironments() {
+	    $sql = "SELECT `environment_id`, `name` FROM `".PSM_DB_PREFIX."environments` ORDER BY `name`;";
+        return $this->db->query($sql);
+    }
 }

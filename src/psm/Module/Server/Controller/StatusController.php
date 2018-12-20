@@ -56,7 +56,8 @@ class StatusController extends AbstractServerController {
 			'label_last_check' => psm_get_lang('servers', 'last_check'),
 			'label_last_online' => psm_get_lang('servers', 'last_online'),
 			'label_last_offline' => psm_get_lang('servers', 'last_offline'),
-			'label_rtime' => psm_get_lang('servers', 'latency'),
+            'label_environment' => psm_get_lang('servers', 'environment'),
+            'label_rtime' => psm_get_lang('servers', 'latency'),
 			'block_layout_active'	=> ($layout == 0) ? 'active' : '',
 			'list_layout_active'	=> ($layout != 0) ? 'active' : '',
 		);

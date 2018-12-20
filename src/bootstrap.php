@@ -54,7 +54,7 @@ if (!defined('PSM_DEBUG')) {
 // Debug enabled: report everything
 // Debug disabled: report error only if created manually
 ini_set('display_errors', 1);
-PSM_DEBUG ? error_reporting(E_ALL) : error_reporting(E_USER_ERROR);
+//PSM_DEBUG ? error_reporting(E_ALL) : error_reporting(E_USER_ERROR);
 
 // check for a cron allowed ip array
 if (!defined('PSM_CRON_ALLOW')) {

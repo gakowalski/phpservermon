@@ -215,6 +215,7 @@ class ServerController extends AbstractServerController {
 				'edit_sms_selected_'.$edit_server['sms'] => 'selected="selected"',
 				'edit_pushover_selected_'.$edit_server['pushover'] => 'selected="selected"',
 				'edit_telegram_selected_'.$edit_server['telegram'] => 'selected="selected"',
+				'edit_environment_id' => $edit_server['environment_id'],
 			));
 		}
 
@@ -231,7 +232,10 @@ class ServerController extends AbstractServerController {
 			}
 		}
 
-		return $this->twig->render('module/server/server/update.tpl.html', $tpl_data);
+		$tpl_data['environment_id'] = $edit_server['environment_id'];
+        $tpl_data['environments'] = $this->getEnvironments();
+
+        return $this->twig->render('module/server/server/update.tpl.html', $tpl_data);
 	}
 
 	/**
@@ -284,6 +288,7 @@ class ServerController extends AbstractServerController {
 			'sms' => in_array($_POST['sms'], array('yes', 'no')) ? $_POST['sms'] : 'no',
 			'pushover' => in_array($_POST['pushover'], array('yes', 'no')) ? $_POST['pushover'] : 'no',
 			'telegram' => in_array($_POST['telegram'], array('yes', 'no')) ? $_POST['telegram'] : 'no',
+            'environment_id' => psm_POST('environment_id', null)
 		);
 		// make sure websites start with http://
 		if ($clean['type'] == 'website' && substr($clean['ip'], 0, 4) != 'http' && substr($clean['ip'], 0, 3) != 'rdp') {
@@ -528,6 +533,7 @@ class ServerController extends AbstractServerController {
 			'label_offline' => psm_get_lang('system', 'offline'),
 			'label_ok' => psm_get_lang('system', 'ok'),
 			'label_bad' => psm_get_lang('system', 'bad'),
+			'label_environment' => psm_get_lang('servers', 'environment'),
 		);
 	}
 
