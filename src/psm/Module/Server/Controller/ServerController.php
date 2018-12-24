@@ -216,7 +216,8 @@ class ServerController extends AbstractServerController {
 				'edit_pushover_selected_'.$edit_server['pushover'] => 'selected="selected"',
 				'edit_telegram_selected_'.$edit_server['telegram'] => 'selected="selected"',
 				'edit_environment_id' => $edit_server['environment_id'],
-			));
+                'environment_id' => $edit_server['environment_id']
+        ));
 		}
 
 		$notifications = array('email', 'sms', 'pushover', 'telegram');
@@ -232,7 +233,6 @@ class ServerController extends AbstractServerController {
 			}
 		}
 
-		$tpl_data['environment_id'] = $edit_server['environment_id'];
         $tpl_data['environments'] = $this->getEnvironments();
 
         return $this->twig->render('module/server/server/update.tpl.html', $tpl_data);
