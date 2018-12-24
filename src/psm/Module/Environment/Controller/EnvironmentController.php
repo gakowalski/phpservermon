@@ -72,30 +72,6 @@ class EnvironmentController extends AbstractController {
     protected function executeIndex() {
         $tpl_data = $this->getLabels();
 
-        $config_db = $this->db->select(
-            PSM_DB_PREFIX.'environments',
-            null,
-            array('environment_id', 'name')
-        );
-
-        $config = array();
-        foreach ($config_db as $entry) {
-            $config[$entry['key']] = $entry['value'];
-        }
-
-        // generate language array
-        $lang_keys = psm_get_langs();
-        $tpl_data['language_current'] = (isset($config['language']))
-            ? $config['language']
-            : 'en_US';
-        $tpl_data['languages'] = array();
-        foreach ($lang_keys as $key => $label) {
-            $tpl_data['languages'][] = array(
-                'value' => $key,
-                'label' => $label,
-            );
-        }
-
         $sidebar = new \psm\Util\Module\Sidebar($this->twig);
         $this->setSidebar($sidebar);
 
@@ -277,7 +253,6 @@ class EnvironmentController extends AbstractController {
 
     protected function getLabels() {
         return array(
-            'label_label' => psm_get_lang('environment', 'label'),
             'label_delete' => psm_get_lang('system', 'delete'),
             'label_edit' => psm_get_lang('system', 'edit'),
             'label_action' => psm_get_lang('system', 'action'),
