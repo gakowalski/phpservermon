@@ -100,7 +100,7 @@ abstract class AbstractServerController extends AbstractController {
 				{$sql_join}
 				{$sql_environments_join}
 				{$sql_where}
-				ORDER BY `active` ASC, `status` DESC, `label` ASC";
+				ORDER BY `e`.`name` ASC, `label` ASC";
 		$servers = $this->db->query($sql);
 
 		if ($server_id !== null && count($servers) == 1) {
