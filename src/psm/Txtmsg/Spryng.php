@@ -30,22 +30,22 @@ namespace psm\Txtmsg;
 class Spryng extends Core {
 
 	/**
-	 * Send sms using the Spryngsms API
-	 * @var string $message
-	 * @var array $this->recipients
-	 * @var string $this->username
-	 * @var string $this->password
-	 * @var string $this->originator
-	 * @var mixed $result
-	 * @var array $headers
-	 *
-	 * @var int $success
-	 * @var string $error
-	 *
-	 * @return bool|string
-	 */
-    
-	public function sendSMS($message) {
+	* Send sms using the Spryngsms API
+	* @var string $message
+	* @var array $this->recipients
+	* @var string $this->username
+	* @var string $this->password
+	* @var string $this->originator
+	
+	* @var mixed $result
+	* @var array $headers
+	*
+	* @var int $success
+	* @var string $error
+	*
+	* @return int or string
+	*/
+    public function sendSMS($message) {
 		$recipients = implode(",", $this->recipients);
 
 		$ch = curl_init();

@@ -31,19 +31,18 @@ namespace psm\Txtmsg;
 class Clickatell extends Core {
 
 	/**
-	 * Send sms using the Clickatell API
-	 * @var string $message
-	 * @var array $this->recipients
-	 * @var string $recipient
-	 * @var string $this->password
-	 * @var string $this->originator
-	 *
-	 * @var int $success
-	 * @var string $error
-	 *
-	 * @return bool|string
-	 */
-	
+	* Send sms using the Clickatell API
+	* @var string $message
+	* @var array $this->recipients
+	* @var string $recipient
+	* @var string $this->password
+	* @var string $this->originator
+	*
+	* @var int $success
+	* @var string $error
+	*
+	* @return int or string
+	*/
 	public function sendSMS($message) {
 		$success = 1;
 		$error = '';

@@ -29,33 +29,33 @@
 namespace psm\Txtmsg;
 
 class Nexmo extends Core {
-	
-	
+
+
 	/**
-	 * Send sms using the GatewayAPI API
-	 *
-	 * @var string $message
-	 * @var string $this->password
-	 * @var array $this->recipients
-	 * @var array $this->originator
-	 * @var string $recipient
-	 *
-	 * @var resource $curl
-	 * @var string $err
-	 * @var mixed $result
-	 *
-	 * @var int $success
-	 * @var string $error
-	 *
-	 * @return bool|string
-	 */
-	
+	* Send sms using the GatewayAPI API
+	*
+	* @var string $message
+	* @var string $this->password
+	* @var array $this->recipients
+	* @var array $this->originator
+	* @var string $recipient
+	*
+	* @var resource $curl
+	* @var string $err
+	* @var mixed $result
+	*
+	* @var int $success
+	* @var string $error
+	*
+	* @return int or string
+	*/
+
 	public function sendSMS($message) {
 		$success = 1;
 		$error = "";
 
 		foreach ($this->recipients as $recipient) {
-			
+
 			$curl = curl_init();
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($curl, CURLOPT_URL, "https://rest.nexmo.com/sms/json?".http_build_query(
@@ -68,19 +68,19 @@ class Nexmo extends Core {
 					)
 				)
 			);
-			
+
 			$result = json_decode(curl_exec($curl), true);
 			$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 			$err = curl_errno($curl);
-			
+
 			if ($err != 0 || $httpcode != 200 || $result['messages'][0]['status'] != "0") {
 				$success = 0;
 				$error = "HTTP_code: ".$httpcode.".\ncURL error (".$err."): ".curl_strerror($err).". \nResult: ".$result['messages'][0]['error-text'];
 			}
 			curl_close($curl);
-			
+
 		}
-		
+
 		if ($success) {
 			return 1;
 		}

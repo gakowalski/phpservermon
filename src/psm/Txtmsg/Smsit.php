@@ -29,7 +29,7 @@
 namespace psm\Txtmsg;
 
 class Smsit extends Core {
-	
+
 	/**
 	 * Send sms using the Smsit API
 	 *
@@ -48,13 +48,13 @@ class Smsit extends Core {
 	 *
 	 * @return bool|string
 	 */
-	
+
 	public function sendSMS($message) {
 		$success = 1;
 		$error = "";
-		
+
 		foreach ($this->recipients as $recipient) {
-			
+
 			$curl = curl_init();
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($curl, CURLOPT_URL, "https://www.smsit.dk/api/v2?".http_build_query(
@@ -66,17 +66,17 @@ class Smsit extends Core {
 					)
 				)
 			);
-			
+
 			$result = curl_exec($curl);
 			$err = curl_errno($curl);
 			curl_close($curl);
-			
+
 			if ($err != 0 || is_numeric(strpos($result, "{\"errors\":[{\"code\":"))) {
 				$success = 0;
 				$error = $result;
 			}
 		}
-		
+
 		if ($success) {
 			return 1;
 		}

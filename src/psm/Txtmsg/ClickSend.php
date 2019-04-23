@@ -29,34 +29,34 @@
 namespace psm\Txtmsg;
 
 class ClickSend extends Core {
-	
+
 	/**
-	 * Send sms using the SMSgw.NET API
-	 *
-	 * @var string $message
-	 * @var string $this->password
-	 * @var array $this->recipients
-	 * @var array $this->originator
-	 * @var string $recipients
-	 *
-	 * @var resource $curl
-	 * @var string $err
-	 * @var mixed $result
-	 *
-	 * @var int $success
-	 * @var string $error
-	 *
-	 * @return bool|string
-	 */
-	
+	* Send sms using the SMSgw.NET API
+	*
+	* @var string $message
+	* @var string $this->password
+	* @var array $this->recipients
+	* @var array $this->originator
+	* @var string $recipients
+	*
+	* @var resource $curl
+	* @var string $err
+	* @var mixed $result
+	*
+	* @var int $success
+	* @var string $error
+	*
+	* @return int or string
+	*/
+
 	public function sendSMS($message) {
 		$error = "";
 		$success = 1;
-		
+
 		if (empty($this->recipients)) {
 			return false;
 		}
-		
+
 		$data = array('messages' => array());
 		foreach ($this->recipients as $recipient) {
 			$data['messages'][] = array(
@@ -66,7 +66,7 @@ class ClickSend extends Core {
 				'body' => $message,
 			);
 		}
-		
+
 		$curl = curl_init();
 		curl_setopt_array($curl, array(
 			CURLOPT_URL => "https://rest.clicksend.com/v3/sms/send",
@@ -82,17 +82,17 @@ class ClickSend extends Core {
 				"content-type: application/json"
 			),
 		));
-		
+
 		$result = json_decode(curl_exec($curl), true);
 		$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		$err = curl_errno($curl);
-		
+
 		if ($err != 0 || ($httpcode != '200' && $httpcode != '201' && $httpcode != '202' && $result['response_code'] != "SUCCESS")) {
 			$success = 0;
 			$error = "HTTP_code: ".$httpcode.".\ncURL error (".$err."): ".curl_strerror($err).". Result: ".$result."";
 		}
 		curl_close($curl);
-		
+
 		if ($success) {
 			return 1;
 		}

@@ -46,7 +46,7 @@ class Textmarketer extends Core {
 	 *
 	 * @return bool|string
 	 */
-    
+
 	public function sendSMS($message) {
 		$success = 1;
 		$error = '';

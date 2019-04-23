@@ -48,7 +48,7 @@ class SolutionsInfini extends Core {
 	 *
 	 * @return bool|string
 	 */
-	
+
 	public function sendSMS($message) {
 		$error = "";
 		$success = 1;

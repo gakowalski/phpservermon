@@ -31,33 +31,33 @@ namespace psm\Txtmsg;
 class Smsglobal extends Core {
 
 	/**
-	 * Send sms using the Smsglobal API
-	 * @var string $message
-	 * @var string $this->password
-	 * @var array $this->recipients
-	 * @var array $this->originator
-	 *
-	 * @var resource $curl
-	 * @var string $err
-	 * @var string $recipient
-	 * @var string $from
-	 * @var mixed $result
-	 *
-	 * @var int $success
-	 * @var string $error
-	 *
-	 * @return bool|string
-	 */
-	
+	* Send sms using the Smsglobal API
+	* @var string $message
+	* @var string $this->password
+	* @var array $this->recipients
+	* @var array $this->originator
+	*
+	* @var resource $curl
+	* @var string $err
+	* @var string $recipient
+	* @var string $from
+	* @var mixed $result
+	*
+	* @var int $success
+	* @var string $error
+	*
+	* @return int or string
+	*/
+
 	public function sendSMS($message) {
 		$error = "";
 		$success = 1;
-		
+
 		$recipients = join(',', $this->recipients);
-		
+
 		$from = substr($this->originator, 0, 11); // Max 11 Characters
 		$message = substr(rawurlencode($message), 0, 153);
-		
+
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
@@ -72,19 +72,19 @@ class Smsglobal extends Core {
 				"text" => $message,
 			)
 		));
-		
+
 		$result = curl_exec($curl);
 		$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-		
+
 		$err = curl_errno($curl);
-			
+
 		if ($err != 0 || substr($result, 0, 5) != "OK: 0") {
 			$success = 0;
 			$result = ($result == '') ? 'Wrong input, please check if all values are correct!' : $result;
 			$error = "HTTP_code: ".$httpcode.".\ncURL error (".$err."): ".curl_strerror($err).". \nResult: ".$result;
 		}
 		curl_close($curl);
-		
+
 		if ($success) {
 			return 1;
 		}

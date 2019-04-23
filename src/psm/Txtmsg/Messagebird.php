@@ -47,18 +47,18 @@ class Messagebird extends Core {
 	 *
 	 * @return bool|string
 	 */
-	
+
 	public function sendSMS($message) {
 		$success = 1;
 		$error = '';
 
 		// Maximum of 50 users a time.
-		$recipients_chunk = array_chunk($this->recipients, ceil(count($this->recipients) / 50)); 
+		$recipients_chunk = array_chunk($this->recipients, ceil(count($this->recipients) / 50));
 
 		foreach ($recipients_chunk as $recipients) {
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, "https://rest.messagebird.com/messages");
-			curl_setopt($ch, CURLOPT_POSTFIELDS, 
+			curl_setopt($ch, CURLOPT_POSTFIELDS,
 			"originator=".urlencode($this->originator == '' ? 'PSM' : $this->originator).
 			"&body=".urlencode($message).
 			"&recipients=".implode(",", $recipients));

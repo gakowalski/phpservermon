@@ -30,34 +30,34 @@
 namespace psm\Txtmsg;
 
 class Plivo extends Core {
-	
+
 	/**
-	 * Send sms using the Plivo API
-	 *
-	 * @var string $message
-	 * @var string $this->password
-	 * @var array $this->recipients
-	 * @var array $this->originator
-	 * @var string $recipients
-	 *
-	 * @var resource $curl
-	 * @var string $err
-	 * @var int $success
-	 * @var string $error
-	 *
-	 * @return bool|string
-	 */
-	
+	* Send sms using the Plivo API
+	*
+	* @var string $message
+	* @var string $this->password
+	* @var array $this->recipients
+	* @var array $this->originator
+	* @var string $recipients
+	*
+	* @var resource $curl
+	* @var string $err
+	* @var int $success
+	* @var string $error
+	*
+	* @return int or string
+	*/
+
 	public function sendSMS($message) {
 		$error = "";
 		$success = 1;
-		
+
 		if (empty($this->recipients)) {
 			return false;
 		}
-		
+
 		$recipients = join('<', $this->recipients);
-		
+
 		$curl = curl_init();
 		curl_setopt_array($curl, array(
 			CURLOPT_URL => "https://api.plivo.com/v1/Account/".$this->username."/Message/",
@@ -79,17 +79,17 @@ class Plivo extends Core {
 				"content-type: application/json"
 			),
 		));
-		
+
 		$result = curl_exec($curl);
 		$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		$err = curl_errno($curl);
-		
+
 		if ($err != 0 || ($httpcode != '200' && $httpcode != '201' && $httpcode != '202')) {
 			$success = 0;
 			$error = "HTTP_code: ".$httpcode.".\ncURL error (".$err."): ".curl_strerror($err).". Result: ".$result."";
 		}
 		curl_close($curl);
-		
+
 		if ($success) {
 			return 1;
 		}

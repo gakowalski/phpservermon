@@ -31,35 +31,35 @@
 namespace psm\Txtmsg;
 
 class Octopush extends Core {
-	
+
 	/**
-	 * Send sms using the Octopush API
-	 * @var string $message
-	 * @var string $this->username
-	 * @var string $this->password
-	 * @var array $this->recipients
-	 * @var array $this->originator
-	 *
-	 * @var resource $curl
-	 * @var SimpleXMLElement $xmlResults
-	 * @var string $err
-	 * @var string $recipient
-	 * @var string $smsType
-	 * @var mixed $result
-	 *
-	 * @var int $success
-	 * @var string $error
-	 *
-	 * @return bool|string
-	 */
-	
+	* Send sms using the Octopush API
+	* @var string $message
+	* @var string $this->username
+	* @var string $this->password
+	* @var array $this->recipients
+	* @var array $this->originator
+	*
+	* @var resource $curl
+	* @var SimpleXMLElement $xmlResults
+	* @var string $err
+	* @var string $recipient
+	* @var string $smsType
+	* @var mixed $result
+	*
+	* @var int $success
+	* @var string $error
+	*
+	* @return int or string
+	*/
+
 	public function sendSMS($message) {
 		$error = "";
 		$success = 1;
 		$smsType = "XXX"; //FR = premium, WWW = world, XXX = Low cost
-		
+
 		$recipients = join(',', $this->recipients);
-		
+
 		$message = ($smsType == "FR") ? urlencode($message." STOP au XXXX") : urlencode($message);
 
 		$curl = curl_init();
@@ -75,7 +75,7 @@ class Octopush extends Core {
 			)
 		);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		
+
 		$result = curl_exec($curl);
 		$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		$xmlResults = simplexml_load_string($result);
@@ -86,7 +86,7 @@ class Octopush extends Core {
 			$error = "HTTP_code: ".$httpcode.".\ncURL error (".$err."): ".curl_strerror($err).". \nResult: ".$xmlResults->error_code.". Look at http://www.octopush-dm.com/en/errors for the error description.";
 		}
 		curl_close($curl);
-		
+
 		if ($success) {
 			return 1;
 		}

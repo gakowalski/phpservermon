@@ -32,25 +32,27 @@ namespace psm\Txtmsg;
 class Smsgw extends Core {
 
 	/**
-	 * Send sms using the SMSgw.NET API
-	 *
-	 * @var string $message
-	 * @var string $this->password
-	 * @var array $this->recipients
-	 * @var array $this->originator
-	 * @var string $recipients
-	 *
-	 * @var resource $curl
-	 * @var string $err
-	 * @var int $success
-	 * @var string $error
-	 *
-	 * @return bool|string
-	 */
+	* Send sms using the SMSgw.NET API
+	*
+	* @var string $message
+	* @var string $this->password
+	* @var array $this->recipients
+	* @var array $this->originator
+	* @var string $recipients
+	*
+	* @var resource $curl
+	* @var string $err
+	* @var int $success
+	* @var string $error
+	*
+	* @return int or string
+	*/
 
 	public function sendSMS($message) {
 		$error = "";
 		$success = 1;
+
+		if(empty($this->recipients)) return false;
 
 		$recipients = join(';', $this->recipients);
 
@@ -75,7 +77,7 @@ class Smsgw extends Core {
 		$result = curl_exec($curl);
 		$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		$err = curl_errno($curl);
-		
+
 		if ($err != 0 || ($httpcode != '200' && $httpcode != '201' && $httpcode != '202' && $result != "1")) {
 			$success = 0;
 			$error = "HTTP_code: ".$httpcode.".\ncURL error (".$err."): ".curl_strerror($err).". Result: ".$result."";

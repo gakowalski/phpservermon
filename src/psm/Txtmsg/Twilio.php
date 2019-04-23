@@ -30,23 +30,22 @@ namespace psm\Txtmsg;
 class Twilio extends Core {
 
 	/**
-	 * Send sms using the Twilio API
-	 * https://www.twilio.com/docs/sms/api#send-an-sms-with-the-sms-api
-	 * @var string $message
-	 * @var array $this->recipients
-	 * @var string $recipient
-	 * @var string $this->username
-	 * @var string $this->password
-	 * @var string $this->originator
-	 * @var mixed $result
-	 * @var array $headers
-	 *
-	 * @var int $success
-	 * @var string $error
-	 *
-	 * @return bool|string
-	 */
-	
+	* Send sms using the Twilio API
+	* https://www.twilio.com/docs/sms/api#send-an-sms-with-the-sms-api
+	* @var string $message
+	* @var array $this->recipients
+	* @var string $recipient
+	* @var string $this->username
+	* @var string $this->password
+	* @var string $this->originator
+	* @var mixed $result
+	* @var array $headers
+	*
+	* @var int $success
+	* @var string $error
+	*
+	* @return int or string
+	*/
 	public function sendSMS($message) {
 		$success = 1;
 		$error = '';
