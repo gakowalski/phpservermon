@@ -96,7 +96,7 @@ $sm_lang = array(
 		'mobile' => 'Celular',
 		'email' => 'Email',
 		'pushover' => 'Pushover',
-		'pushover_description' => 'Pushover para enviar notificações em real-tome. Veja <a href="https://pushover.net/">o website</a> para mais informações.',
+		'pushover_description' => 'Pushover para enviar notificações em real-time. Veja <a href="https://pushover.net/">o website</a> para mais informações.',
 		'pushover_key' => 'Pushover Key',
 		'pushover_device' => 'Pushover Device',
 		'pushover_device_description' => 'Nome do Device para enviar a mensagem. Deixe em branco para enviar a todos os Devices.',
