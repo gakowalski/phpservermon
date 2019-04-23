@@ -24,6 +24,7 @@ Not yet released
 * ef28908: Indentation fix.
 * #605: Added Norwegian language.
 * f6173d4: Added license to composer.json file.
+* #679: Fixed CSRF vulnerability, added CSRF-token to delete-URLs.
 
 v3.3.1 (released August 10, 2018)
 --------------------------------
