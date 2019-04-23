@@ -1,0 +1,19 @@
+{% import 'main/macros.tpl.html' as macro %}
+<form class="form-horizontal well" action="{{ url_save|raw }}" method="post" autocomplete="off">
+    {{ macro.csrf_input() }}
+    <fieldset>
+        <legend>{{ titlemode }}</legend>
+        <div class="control-group">
+            <label class="control-label" for="name">{{ label_name }}</label>
+            <div class="controls">
+                <input type="text" id="name" name="name" value="{{ edit_value_name }}" maxlength="45" />
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <div class="form-actions">
+            <button class="btn btn-success" type="submit">{{ label_save }}</button>
+            <a class="btn" href="{{ url_go_back|raw }}" >{{ label_go_back }}</a>
+        </div>
+    </fieldset>
+</form>
