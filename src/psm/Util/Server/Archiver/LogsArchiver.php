@@ -78,13 +78,4 @@ class LogsArchiver implements ArchiverInterface {
 		$this->db->delete(PSM_DB_PREFIX . "log_users");
 		return true;
 	}
-
-	/**
-	 * Empty tables log and log_users
-	 */
-	public function cleanupall() {
-		$this->db->delete(PSM_DB_PREFIX."log");
-		$this->db->delete(PSM_DB_PREFIX."log_users");
-		return true;
-	}
 }
