@@ -150,7 +150,7 @@ class StatusNotifier {
 		$this->status_new = $status_new;
 
 		// get server info from db
-		// only get info that will be put into the notification 
+		// only get info that will be put into the notification
 		// or is needed to check if a notification need to be send
 		$this->server = $this->db->selectRow(PSM_DB_PREFIX.'servers', array(
 			'server_id' => $server_id,
@@ -232,6 +232,12 @@ class StatusNotifier {
 			$this->combine ? $this->setCombi('telegram') : $this->notifyByTelegram($users);
 		}
 
+		// check if telegram is enabled for this server
+		if($this->send_telegram && $this->server['telegram'] == 'yes') {
+			// yay lets wake those nerds up!
+			$this->notifyByTelegram($users);
+		}
+
 		return $notify;
 	}
 
@@ -256,7 +262,7 @@ class StatusNotifier {
 			}
 			return;
 		}
-		
+
 		$this->combiNotification['notifications'][$method][$status][$this->server_id] =
             psm_parse_msg($this->status_new, $method.'_message', $this->server, true);
 		return;
@@ -505,12 +511,12 @@ class StatusNotifier {
 			psm_parse_msg($this->status_new, 'telegram_message', $this->server);
         $telegram = psm_build_telegram();
 		$telegram->setMessage($message);
-		
+
         // Log
         if (psm_get_conf('log_telegram')) {
             $log_id = psm_add_log($this->server_id, 'telegram', $message);
 		}
-		
+
         foreach ($users as $user) {
             // Log
             if (!empty($log_id)) {

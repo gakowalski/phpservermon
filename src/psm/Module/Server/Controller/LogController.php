@@ -63,6 +63,17 @@ class LogController extends AbstractServerController {
 			'tabs' => array(),
 		);
 
+		if($this->getUser()->getUserLevel() == PSM_USER_ADMIN) {
+			$modal = new \psm\Util\Module\Modal($this->twig, 'delete', \psm\Util\Module\Modal::MODAL_TYPE_DANGER);
+			$this->addModal($modal);
+			$modal->setTitle(psm_get_lang('log', 'delete_title'));
+			$modal->setMessage(psm_get_lang('log', 'delete_message'));
+			$modal->setOKButtonLabel(psm_get_lang('system', 'delete'));
+			$tpl_data['has_admin_actions'] = true;
+		}
+
+		$log_types = array('status', 'email', 'sms', 'pushover', 'telegram');
+
 		if ($this->getUser()->getUserLevel() == PSM_USER_ADMIN) {
 			$modal = new \psm\Util\Module\Modal($this->twig, 'delete', \psm\Util\Module\Modal::MODAL_TYPE_DANGER);
 			$this->addModal($modal);

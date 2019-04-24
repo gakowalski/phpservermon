@@ -19,6 +19,7 @@
  *
  * @package     phpservermon
  * @author      Scavin <www.appinn.com>
+ * @author      manhere <https://github.com/manhere>
  * @copyright   Copyright (c) 2008-2017 Pepijn Over <pep@mailbox.org>
  * @license     http://www.gnu.org/licenses/gpl.txt GNU GPL v3
  * @version     Release: @package_version@
@@ -333,7 +334,7 @@ $sm_lang = array(
         'telegram_sent' => '发送 Telegram 通知',
         'telegram_error' => 'Telegram 通知发送出错: %s',
         'telegram_error_notoken' => '不能发送测试通知: 在设置中没有发现 Telegram API token。',
-        'telegram_error_noid' => '不能发送测试通知: 在你的资料中没有设置 chat id。',        
+        'telegram_error_noid' => '不能发送测试通知: 在你的资料中没有设置 chat id。',
         'log_retention_period' => '日志保留时长',
         'log_retention_period_description' => '日志存档保留时间，0为禁用日志清理',
         'log_retention_days' => '天',
@@ -362,7 +363,7 @@ $sm_lang = array(
         'combi_pushover_subject' => '\'%UP%\' 服务器恢复运行, \'%DOWN%\' 服务器 宕机',
         'combi_email_message' => '<b>服务器已宕机:</b><br/>%DOWN_SERVERS%<br/><b>服务器恢复运行:</b><br/>%UP_SERVERS%',
         'combi_pushover_message' => '<b>服务器已宕机:</b><br/>%DOWN_SERVERS%<br/><b>服务器恢复运行:</b><br/>%UP_SERVERS%',
-        'combi_telegram_message' => '<b>服务器已宕机:</b><br/>%DOWN_SERVERS%<br/><b>服务器恢复运行:</b><br/>%UP_SERVERS%',        
+        'combi_telegram_message' => '<b>服务器已宕机:</b><br/>%DOWN_SERVERS%<br/><b>服务器恢复运行:</b><br/>%UP_SERVERS%',
     ),
     'login' => array(
         'welcome_usermenu' => '欢迎, %user_name%',

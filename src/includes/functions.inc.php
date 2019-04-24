@@ -40,11 +40,11 @@
  */
 function psm_get_lang() {
 	$args = func_get_args();
-	
+
 	if (empty($args)) {
 		return isset($GLOBALS['sm_lang']) ? $GLOBALS['sm_lang'] : $GLOBALS['sm_lang_default'];
 	}
-	
+
 	if (isset($GLOBALS['sm_lang'])) {
 		$lang = $GLOBALS['sm_lang'];
 		$not_found = false;
@@ -87,7 +87,7 @@ function psm_load_lang($lang) {
 	if ($lang != "en_US") {
 		$lang_file = PSM_PATH_LANG.$lang.'.lang.php';
 		file_exists($lang_file) ? require $lang_file : trigger_error("Translation file could not be found! Default language will be used.", E_USER_WARNING);
-		
+
 		isset($sm_lang) ? $GLOBALS['sm_lang'] = $sm_lang : trigger_error("\$sm_lang not found in translation file! Default language will be used.", E_USER_WARNING);
 		isset($sm_lang['locale']) ? setlocale(LC_TIME, $sm_lang['locale']) : trigger_error("locale could not ben found in translation file.", E_USER_WARNING);
 	}
@@ -369,7 +369,7 @@ function psm_curl_get($href, $header = false, $body = true, $timeout = null, $ad
 	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
 	curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
 	curl_setopt($ch, CURLOPT_ENCODING, '');
-	
+
 	if (!empty($request_method)) {
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $request_method);
 	}
@@ -400,7 +400,7 @@ function psm_curl_get($href, $header = false, $body = true, $timeout = null, $ad
 
 	$result = curl_exec($ch);
 	curl_close($ch);
-	
+
 	if(defined('PSM_DEBUG') && PSM_DEBUG === true && psm_is_cli()) {
 		echo PHP_EOL.'==============cURL Result for: '.$href.'==========================================='.PHP_EOL;
 		print_r($result);
@@ -408,6 +408,21 @@ function psm_curl_get($href, $header = false, $body = true, $timeout = null, $ad
 	}
 
 	return $result;
+}
+
+/**
+ * Get SSL certificate information about the peer
+ *
+ * @param string $href
+ * @return array
+ */
+function psm_cert_info_get($href, $port) {
+	$host = parse_url($href, PHP_URL_HOST);
+	$stream_context = stream_context_create( array( "ssl" => array("capture_peer_cert" => TRUE ) ) );
+	$stream_client = stream_socket_client("ssl://" . $host . ":$port", $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $stream_context );
+	$cert = stream_context_get_params( $stream_client );
+	$cert_info = openssl_x509_parse( $cert['options']['ssl']['peer_certificate'] );
+	return $cert_info;
 }
 
 /**

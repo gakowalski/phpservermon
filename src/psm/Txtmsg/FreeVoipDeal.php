@@ -51,7 +51,7 @@ class FreeVoipDeal extends Core {
 	public function sendSMS($message) {
 		$error = "";
 		$success = 1;
-		
+
 		$message = rawurlencode($message);
 
 		foreach ($this->recipients as $recipient) {

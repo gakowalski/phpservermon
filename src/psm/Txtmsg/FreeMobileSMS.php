@@ -19,6 +19,7 @@
  *
  * @package     phpservermon
  * @author      Ward Pieters <ward@wardpieters.nl>
+ * @author      Michiel van der Wulp <michiel@vanderwulp.be>
  * @copyright   Copyright (c) 2008-2017 Pepijn Over <pep@mailbox.org>
  * @license     http://www.gnu.org/licenses/gpl.txt GNU GPL v3
  * @version     Release: @package_version@

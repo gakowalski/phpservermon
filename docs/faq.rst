@@ -110,14 +110,14 @@ You need to be an administrator for this part.
 
 How do I sent Telegram notifications to a person?
 -------------------------------------------------
- 
+
 1. Go to @cid_bot (https://t.me/cid_bot) and start.
 2. Save your chat id.
 3. Press the activation button.
 4. Go to your chat with the bot and press start of type /start.
 
 How do I sent Telegram notifications to a group?
-------------------------------------------------  
+------------------------------------------------
 
 1. Add @cid_bot (https://t.me/cid_bot) to the group.
 2. Save the chat id (including the -).

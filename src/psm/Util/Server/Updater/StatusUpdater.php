@@ -71,7 +71,7 @@ class StatusUpdater {
 	 *
 	 * Please note: if the server is down but has not met the warning threshold, this will return true
 	 * to avoid any "we are down" events.
-	 * 
+	 *
 	 * @todo Get last_output when there is a HTTP 50x error.
 	 *
 	 * @param int $server_id
@@ -216,6 +216,8 @@ class StatusUpdater {
 			fclose($fp);
 		}
 
+                    $this->check_ssl($this->server, $this->error, $status);
+
 		// check if server is available and rerun if asked.
 		if (!$status && $run < $max_runs) {
 			return $this->updateService($max_runs, $run + 1);
@@ -231,6 +233,7 @@ class StatusUpdater {
 	 * @return boolean
 	 */
 	protected function updateWebsite($max_runs, $run = 1) {
+                $result = '';
 		$starttime = microtime(true);
 
 		// We're only interested in the header, because that should tell us plenty!
@@ -279,8 +282,8 @@ class StatusUpdater {
 					// Check to see if the body should not contain specified pattern
 					// Check to see if the pattern was [not] found.
 					if (($this->server['pattern_online'] == 'yes') == !preg_match("/{$this->server['pattern']}/i", $curl_result)) {
-						$this->error = "TEXT ERROR : Pattern '{$this->server['pattern']}' ". 
-							($this->server['pattern_online'] == 'yes' ? 'not' : 'was'). 
+						$this->error = "TEXT ERROR : Pattern '{$this->server['pattern']}' ".
+							($this->server['pattern_online'] == 'yes' ? 'not' : 'was').
 							' found.';
 						$result = false;
 					}
@@ -325,8 +328,35 @@ class StatusUpdater {
 						$result = false;
 					}
 				}
+
+				// Should we check a header ?
+				if($this->server['header_name'] != '' && $this->server['header_value'] != '') {
+					$header_flag = false;
+					$header_text = substr($curl_result, 0, strpos($curl_result, "\r\n\r\n")); // Only get the header text if the result also includes the body
+					foreach (explode("\r\n", $header_text) as $i => $line) {
+						if ($i === 0 || strpos($line, ':') == false) {
+							continue; // We skip the status code & other non-header lines. Needed for proxy or redirects
+						} else {
+							list ($key, $value) = explode(': ', $line);
+							if (strcasecmp($key, $this->server['header_name']) == 0) { // Header found (case-insensitive)
+								if(!preg_match("/{$this->server['header_value']}/i", $value)) { // The value doesn't match what we needed
+									$result = false;
+								} else {
+									$header_flag = true;
+									break; // No need to go further
+								}
+							}
+						}
+					}
+
+					if(!$header_flag) $result = false; // Header was not present
+				}
 			}
 		}
+
+
+                   $this->check_ssl($this->server, $this->error, $result);
+
 
 		// check if server is available and rerun if asked.
 		if (!$result && $run < $max_runs) {
@@ -335,6 +365,38 @@ class StatusUpdater {
 
 		return $result;
 	}
+
+
+        /**
+         *  Check if a server speaks SSL and if the certificate is not expired.
+         * @param string $error
+         * @param bool $result
+         */
+        private function check_ssl($server, &$error, &$result) {
+                  if(($ssl_cert_expiry_days = $server['ssl_cert_expiry_days']) > 0) {
+                        $cert_info = psm_cert_info_get($server['ip'], $server['port']);
+                        if( empty( $cert_info) ) {
+                            $error = "SSL is disabled.";
+                            $result = false;
+                        } else {
+                            $current_time = time();
+                            $seconds_per_day = 86400;
+                            $cert_valid_until = $cert_info['validTo_time_t'];
+                            $latest_time = $current_time + $seconds_per_day*$ssl_cert_expiry_days;
+                            if( $latest_time > $cert_valid_until ) {
+                                 $remaining_time = $cert_valid_until - $current_time;
+                                 $remaining_days = (int)( $remaining_time / $seconds_per_day );
+                                 if( $remaining_days >= 0 ) {
+                                    $error = "SSL certificate expiring: $remaining_days days left.";
+                                 } else {
+                                     $remaining_days *= -1;
+                                     $error = "SSL certificate expired since $remaining_days.";
+                                 }
+                                 $result = false;
+                            }
+                        }
+                  }
+            }
 
 	/**
 	 * Get the error returned by the update function

@@ -40,7 +40,7 @@ class LogsArchiver implements ArchiverInterface {
 	 */
 	protected $db;
 
-	function __construct(Database $db) {
+	function __construct( Database $db ) {
 		$this->db = $db;
 	}
 
@@ -48,9 +48,10 @@ class LogsArchiver implements ArchiverInterface {
 	 * Currently there is not really a log archive.
 	 *
 	 * It stays in the log table until cleaned up.
+	 *
 	 * @param int $server_id
 	 */
-	public function archive($server_id = null) {
+	public function archive( $server_id = null ) {
 		return true;
 	}
 
@@ -61,10 +62,20 @@ class LogsArchiver implements ArchiverInterface {
 				: '';
 
 		$this->db->execute(
-			"DELETE FROM `".PSM_DB_PREFIX."log` WHERE {$sql_where_server} `datetime` < :latest_date",
-			array('latest_date' => $retention_date->format('Y-m-d 00:00:00')),
+			"DELETE FROM `" . PSM_DB_PREFIX . "log` WHERE {$sql_where_server} `datetime` < :latest_date",
+			array( 'latest_date' => $retention_date->format( 'Y-m-d 00:00:00' ) ),
 			false
 		);
+
+		return true;
+	}
+
+	/**
+	 * Empty tables log and log_users
+	 */
+	public function cleanupall() {
+		$this->db->delete(PSM_DB_PREFIX . "log");
+		$this->db->delete(PSM_DB_PREFIX . "log_users");
 		return true;
 	}
 

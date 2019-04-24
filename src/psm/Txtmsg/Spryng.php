@@ -36,7 +36,6 @@ class Spryng extends Core {
 	* @var string $this->username
 	* @var string $this->password
 	* @var string $this->originator
-	
 	* @var mixed $result
 	* @var array $headers
 	*

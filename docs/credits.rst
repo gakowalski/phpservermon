@@ -22,6 +22,14 @@ The following people have contributed to the development of PHP Server Monitor:
 
   * Project developer & maintainer
 
+* Samuel Denis-D'Ortun - https://github.com/sadortun
+
+  * Project developer
+ 
+* Tim Zandbergen - https://github.com/TimZ99
+
+  * Project developer
+
 * Jérôme Cabanis - https://github.com/Abawell
 
   * History graphs
