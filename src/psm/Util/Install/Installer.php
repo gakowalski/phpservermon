@@ -523,7 +523,8 @@ class Installer {
 	 */
 	protected function upgrade321() {
 		$queries = array();
-		$queries[] = "ALTER TABLE `".PSM_DB_PREFIX."servers` ADD COLUMN `header_name` VARCHAR(255) AFTER `pattern`, ADD COLUMN `header_value` VARCHAR(255) AFTER `header_name`";
+		$queries[] = "ALTER TABLE `" . PSM_DB_PREFIX . "servers` ADD COLUMN `header_name` VARCHAR(255) AFTER `pattern`, ADD COLUMN `header_value` VARCHAR(255) AFTER `header_name`";
+    $queries[] = "ALTER TABLE `" . PSM_DB_PREFIX . "servers` ADD `ssl_cert_expiry_days` MEDIUMINT( 1 ) UNSIGNED NOT NULL DEFAULT '0' AFTER `warning_threshold_counter`";
 		$this->execSQL($queries);
 	}
 
@@ -590,31 +591,6 @@ class Installer {
         $this->execSQL($queries);
         $this->log('Environments functionality upgrade/update scripts.');
     }
-
-	/**
-	 * Upgrade for v3.2.1 release
-	 */
-	protected function upgrade321() {
-		$queries = array();
-		$queries[] = "ALTER TABLE `" . PSM_DB_PREFIX . "servers` ADD COLUMN `header_name` VARCHAR(255) AFTER `pattern`, ADD COLUMN `header_value` VARCHAR(255) AFTER `header_name`";
-    $queries[] = "ALTER TABLE `" . PSM_DB_PREFIX . "servers` ADD `ssl_cert_expiry_days` MEDIUMINT( 1 ) UNSIGNED NOT NULL DEFAULT '0' AFTER `warning_threshold_counter`";
-		$this->execSQL($queries);
-	}
-
-	/**
-	 * Upgrade for v3.2.2 release
-	 */
-	protected function upgrade322() {
-		$queries = array();
-		$queries[] = "ALTER TABLE `" . PSM_DB_PREFIX . "users` ADD  `telegram_id` VARCHAR( 255 ) NOT NULL AFTER `pushover_device`;";
-		$queries[] = "ALTER TABLE `" . PSM_DB_PREFIX . "servers` ADD  `telegram` ENUM( 'yes','no' ) NOT NULL DEFAULT 'yes' AFTER  `pushover`;";
-		$queries[] = "ALTER TABLE `" . PSM_DB_PREFIX . "log` CHANGE `type` `type` ENUM( 'status', 'email', 'sms', 'pushover', 'telegram' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;";
-		$queries[] = "INSERT INTO `" . PSM_DB_PREFIX . "config` (`key`, `value`) VALUE
-					('telegram_status', '0'),
-					('log_telegram', '1'),
-					('telegram_api_token', '');";
-		$this->execSQL($queries);
-	}
 }
 
 
