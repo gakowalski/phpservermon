@@ -61,6 +61,7 @@ class FreeMobileSMS extends Core {
 			)
 		);
 
+		$result = curl_exec($curl);
 		$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		$err = curl_errno($curl);
 
