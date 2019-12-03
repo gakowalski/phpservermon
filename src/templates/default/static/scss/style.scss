@@ -4,18 +4,18 @@ html {
 }
 
 html[dir='rtl'] {
-
-    #auto_refresh_servers,
-    #log_retention_period {
-        border-left-width: 0px
-    }
-
-    #auto_refresh_servers_input,
-    #log_retention_period_input {
+    #auto_refresh_description,
+    #log_retention_period_help {
         border-top-left-radius: .25rem;
         border-bottom-left-radius: .25rem;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
+    }
+}
+
+html[dir='ltr'] {
+    #auto_refresh_description,
+    #log_retention_period_help {
+        border-top-right-radius: .25rem;
+        border-bottom-right-radius: .25rem;
     }
 }
 
@@ -65,19 +65,6 @@ a.icon {
     padding-left: 10px;
 }
 
-#auto_refresh_servers,
-#log_retention_period {
-    border-right-width: 0px
-}
-
-#auto_refresh_servers_input,
-#log_retention_period_input {
-    border-top-right-radius: .25rem;
-    border-bottom-right-radius: .25rem;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
 form.form-signin input[type="text"],
 form.form-reset input[type="text"] {
     border-bottom-left-radius: 0;
@@ -106,6 +93,18 @@ form.form-reset {
     margin: auto;
 }
 
+table {
+    table-layout: fixed;
+}
+
+th, td {
+    max-width:1px;
+}
+.content {
+    word-wrap:break-word;
+    overflow-wrap:break-word;
+}
+
 table tr[visible='false'],
 .no-result {
     display: none;
@@ -113,28 +112,6 @@ table tr[visible='false'],
 
 table tr[visible='true'] {
     display: table-row;
-}
-
-td, tbody th > a {
-    -ms-word-break: break-all;
-    word-break: break-all;
-    word-break: break-word;
-    overflow-wrap: break-word;
-}
-
-td, th {
-    text-align: left;
-    width: 1%;
-    white-space: nowrap;
-}
-
-td.full, th.full {
-    width: 100%;
-    white-space: normal;
-    -ms-word-break: break-all;
-    word-break: break-all;
-    word-break: break-word;
-    overflow-wrap: break-word;
 }
 
 .bootstrap-select>.dropdown-toggle.bs-placeholder,
@@ -182,6 +159,16 @@ td.full, th.full {
 
 #needle {
     background: rgba(52, 52, 64, 0.7);
+    border-radius: 4px;
+    bottom: -4px;
+    box-shadow: 3px -1px 4px rgba(0, 0, 0, 0.4);
+    display: block;
+    height: 8px;
+    left: 5px;
+    position: absolute;
+    width: 95px;
+    transform-origin: 100% 4px;
+    transition: all 1s;
     border-radius: 4px;
     bottom: -4px;
     box-shadow: 3px -1px 4px rgba(0, 0, 0, 0.4);

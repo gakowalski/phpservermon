@@ -62,6 +62,7 @@ class StatusController extends AbstractServerController {
 			'block_layout_active' => ($layout == 0) ? 'active' : '',
 			'list_layout_active' => ($layout != 0) ? 'active' : '',
 			'label_add_server' => psm_get_lang('system', 'add_new'),
+			'layout' => $layout,
 			'url_save' => psm_build_url(array('mod' => 'server', 'action' => 'edit')),
 			'label_environment' => psm_get_lang('servers', 'environment'),
 		);
@@ -73,6 +74,7 @@ class StatusController extends AbstractServerController {
 		$servers = $this->getServers();
 
 		$layout_data['servers_offline'] = array();
+		$layout_data['servers_warning'] = array();
 		$layout_data['servers_online'] = array();
 
 		foreach ($servers as $server) {
@@ -91,8 +93,7 @@ class StatusController extends AbstractServerController {
 			if ($server['status'] == "off") {
 				$layout_data['servers_offline'][] = $server;
 			} elseif ($server['warning_threshold_counter'] > 0) {
-				$server['class_warning'] = 'warning';
-				$layout_data['servers_offline'][] = $server;
+				$layout_data['servers_warning'][] = $server;
 			} else {
 				$layout_data['servers_online'][] = $server;
 			}

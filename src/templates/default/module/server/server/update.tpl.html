@@ -115,7 +115,7 @@
 			<!-- Warning threshold -->
 			{{ macro.input_field("number", "warning_threshold", null, "warning_threshold", label_warning_threshold, edit_value_warning_threshold, "0", "5", 'warning_threshold_help', label_warning_threshold_description) }}
 			<!-- Timeout -->
-			{{ macro.input_field("number", "timeout", null, "timeout", label_timeout, edit_value_timeout, null, "10", 'timeout_help', label_timeout_description) }}
+			{{ macro.input_field("number", "timeout", null, "timeout", label_timeout, edit_value_timeout, default_value_timeout, "10", 'timeout_help', label_timeout_description) }}
 		</div>
 	</fieldset>
 	<fieldset class="types typeWebsite">
@@ -124,7 +124,7 @@
 			<!-- Website username -->
 			{{ macro.input_field("text", "website_username", null, "website_username", label_website_username, edit_value_website_username, null, "255", 'website_username_help', label_website_username_description, null, true, null, null, true) }}
 			<!-- website password -->
-			{{ macro.input_field("password", "website_password", null, "website_password", label_website_password, edit_value_website_password, null, "10", 'website_password_help', label_website_password_description, null, true, null, null, true) }}
+			{{ macro.input_field("password", "website_password", null, "website_password", label_website_password, edit_value_website_password, null, "255", 'website_password_help', label_website_password_description, null, true, null, null, true) }}
 		</div>
 	</fieldset>
 	<fieldset>

@@ -26,7 +26,7 @@
  **/
 
 $sm_lang = array(
-	'name' => 'Estonian - Eesti keel',
+	'name' => 'Eesti keel - Estonian',
 	'locale' => array('et_ET.UTF-8', 'et_ET', 'estonian'),
 	'locale_tag' => 'et',
 	'locale_dir' => 'ltr',
@@ -227,7 +227,7 @@ $sm_lang = array(
 		'settings_notification' => 'Teavituste seaded',
 		'settings_log' => 'Logi seaded',
 		'auto_refresh' => 'Automaatne värskendamine',
-		'auto_refresh_servers' =>
+		'auto_refresh_description' =>
 			'Värskenda lehte automaatselt.<br>'.
 			'<span class="small">'.
 			'Aeg sekundites, kui 0 siis lehte ei värskendata.'.

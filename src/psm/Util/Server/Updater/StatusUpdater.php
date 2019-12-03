@@ -126,7 +126,7 @@ class StatusUpdater {
 			// if the server is on, add the last_online value and reset the error threshold counter
 			$save['status'] = 'on';
 			$save['last_online'] = date('Y-m-d H:i:s');
-			$save['last_output'] = $this->header;
+			$save['last_output'] = substr($this->header,0,5000);
 			$save['warning_threshold_counter'] = 0;
 			if ($this->server['status'] == 'off') {
 				$online_date = new \DateTime($save['last_online']);
@@ -152,7 +152,6 @@ class StatusUpdater {
 				}
 			}
 		}
-
 		$this->db->save(PSM_DB_PREFIX.'servers', $save, array('server_id' => $this->server_id));
 
 		return $this->status_new;
@@ -203,11 +202,12 @@ class StatusUpdater {
 	 * @return boolean
 	 */
 	protected function updateService($max_runs, $run = 1) {
+		$timeout = ($this->server['timeout'] === null || $this->server['timeout'] > 0) ? PSM_CURL_TIMEOUT : intval($this->server['timeout']);
 		$errno = 0;
 		// save response time
 		$starttime = microtime(true);
 
-		$fp = @fsockopen($this->server['ip'], $this->server['port'], $errno, $this->error, 10);
+		$fp = @fsockopen($this->server['ip'], $this->server['port'], $errno, $this->error, $timeout);
 
 		$status = ($fp === false) ? false : true;
 		$this->rtime = (microtime(true) - $starttime);

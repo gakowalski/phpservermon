@@ -130,6 +130,7 @@ $sm_lang = array(
 		'error_user_no_match' => 'De gebruiker kon niet worden toegevoegd aan de database.',
 		'error_user_password_invalid' => 'Het ingevulde wachtwoord is ongeldig.',
 		'error_user_password_no_match' => 'De ingevulde wachtwoorden komen niet overeen.',
+		'error_user_admin_cant_be_deleted' => 'Je kan de laatste administrator niet verwijderen.',
 	),
 	'log' => array(
 		'title' => 'Log entries',
@@ -281,7 +282,7 @@ $sm_lang = array(
 		'settings_log' => 'Log instellingen',
 		'settings_proxy' => 'Proxy instellingen',
 		'auto_refresh' => 'Herlaad automatisch',
-		'auto_refresh_servers' => 'Auto-herladen servers pagina.<br><span class="small">Tijd in seconden, als de tijd 0 is wordt de pagina niet ververst.</span>',
+		'auto_refresh_description' => 'Auto-herladen servers pagina.<br><span class="small">Tijd in seconden, als de tijd 0 is wordt de pagina niet ververst.</span>',
 		'seconds' => 'seconden',
 		'test' => 'Test',
 		'test_email' => 'Er zal een email verstuurd worden naar het email adres in je profiel.',

@@ -149,6 +149,7 @@ $sm_lang = array(
 		'error_user_no_match' => 'The user could not be found in the database.',
 		'error_user_password_invalid' => 'The entered password is invalid.',
 		'error_user_password_no_match' => 'The entered passwords do not match.',
+		'error_user_admin_cant_be_deleted' => 'You can\'t remove the last administrator.',
 	),
 	'log' => array(
 		'title' => 'Log entries',
@@ -195,7 +196,7 @@ $sm_lang = array(
 		'pattern' => 'Search string/pattern',
 		'pattern_description' => 'If this pattern is not found on the website, the server will be marked online/offline. Regular expressions are allowed.',
 		'pattern_online' => 'Pattern indicates website is',
-		'pattern_online_description' => 'Online: If this pattern is not found on the website, the server will be marked online. Offline: If this pattern is not found on the website, the server will be marked offline.',
+		'pattern_online_description' => 'Online: If this pattern was found on the website, the server will be marked online. Offline: If this pattern was not found on the website, the server will be marked offline.',
 		'redirect_check' => 'Redirecting to another domain is',
 		'redirect_check_description' => 'Redirect to another domain is usually a bad sign.',
 		'allow_http_status' => 'Allow HTTP status code',
@@ -334,7 +335,7 @@ $sm_lang = array(
 		'settings_log' => 'Log settings',
 		'settings_proxy' => 'Proxy settings',
 		'auto_refresh' => 'Auto-refresh',
-		'auto_refresh_servers' =>
+		'auto_refresh_description' =>
 			'Auto-refresh servers page.<br>'.
 			'<span class="small">'.
 			'Time in seconds, if 0 the page won\'t refresh.'.

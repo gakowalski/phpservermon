@@ -27,7 +27,7 @@
  **/
 
 $sm_lang = array(
-	'name' => 'Russian - Русский',
+	'name' => 'Русский - Russian',
 	'locale' => array('ru_RU.UTF-8', 'ru_RU', 'russian', 'russian'),
 	'locale_tag' => 'ru',
 	'locale_dir' => 'ltr',
@@ -168,7 +168,7 @@ $sm_lang = array(
 		'pattern' => 'Искать текст/шаблон',
 		'pattern_description' => 'Если текст по шаблону не найден на сайте, сервер будет помечен как Оффлайн. Регулярные выражения допустимы.',
 		'pattern_online' => 'Шаблон указывает что вебсайт:',
-		'pattern_online_description' => 'Online: Если этот шаблон не найден на веб-сайте, сервер будет отмечен Онлайн. Offline: Если этот шаблон не найден на веб-сайте, сервер будет отмечен как Оффлайн.',
+		'pattern_online_description' => 'Online: Если этот шаблон найден на веб-сайте, сервер будет отмечен Онлайн. Offline: Если этот шаблон не найден на веб-сайте, сервер будет отмечен как Оффлайн.',
 		'header_name' => 'Название заголовка',
 		'header_value' => 'Значение заголовка',
 		'header_name_description' => 'с учетом регистра.',
@@ -293,7 +293,7 @@ $sm_lang = array(
 		'settings_log' => 'Настройка логирования',
 		'settings_proxy' => 'Настройка прокси',
 		'auto_refresh' => 'Авто-обновление',
-		'auto_refresh_servers' =>
+		'auto_refresh_description' =>
 			'Авто-обновление страницы статуса серверов.<br>'.
 			'<span class="small">'.
 			'Время в секундах. Если указано 0, то страница не будет обновляться.'.

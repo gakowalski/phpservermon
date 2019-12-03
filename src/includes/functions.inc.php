@@ -354,7 +354,7 @@ function psm_parse_msg($status, $type, $vars, $combi = false) {
  * @return string cURL result
  */
 function psm_curl_get($href, $header = false, $body = true, $timeout = null, $add_agent = true, $website_username = false, $website_password = false, $request_method = null, $post_field = null) {
-	$timeout = $timeout == null ? PSM_CURL_TIMEOUT : intval($timeout);
+	($timeout === null || $timeout > 0) ? PSM_CURL_TIMEOUT : intval($timeout);
 
 	$ch = curl_init();
 	if(defined('PSM_DEBUG') && PSM_DEBUG === true && psm_is_cli()) {
@@ -381,6 +381,8 @@ function psm_curl_get($href, $header = false, $body = true, $timeout = null, $ad
 	if ($website_username !== false && $website_password !== false && !empty($website_username) && !empty($website_password)) {
 		curl_setopt($ch, CURLOPT_USERPWD, $website_username.":".$website_password);
 	}
+
+	$href = preg_replace('/(.*)(%cachebuster%)/', '$0'.time(), $href);
 
 	curl_setopt($ch, CURLOPT_URL, $href);
 
@@ -497,17 +499,19 @@ function psm_update_available() {
 		// update last check date
 		psm_update_conf('last_update_check', time());
 		$latest = psm_curl_get(PSM_UPDATE_URL);
+		// extract latest version from Github.
+		preg_match('/"tag_name":"[v](([\d][.][\d][.][\d])(-?\w*))"/', $latest, $latest);
 		// add latest version to database
-		if ($latest !== false && strlen($latest) < 15) {
-			psm_update_conf('version_update_check', $latest);
+		if (!empty($latest) && strlen($latest[2]) < 15) {
+			psm_update_conf('version_update_check', $latest[2]);
 		}
 	} else {
-		$latest = psm_get_conf('version_update_check');
+		$latest[2] = psm_get_conf('version_update_check');
 	}
 
-	if ($latest !== false) {
+	if (!empty($latest)) {
 		$current = psm_get_conf('version');
-		return version_compare($latest, $current, '>');
+		return version_compare($latest[2], $current, '>');
 	} else {
 		return false;
 	}
@@ -774,7 +778,6 @@ function psm_no_cache() {
  * @return string
  * @author Pavel Laupe Dvorak <pavel@pavel-dvorak.cz>
  */
-// TODO change to working function
 function psm_password_encrypt($key, $password)
 {
 	if (empty($password)) {
@@ -785,21 +788,19 @@ function psm_password_encrypt($key, $password)
 		throw new \InvalidArgumentException('invalid_encryption_key');
 	}
 
-	// TODO rewrite
-	$iv = mcrypt_create_iv(
-		mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC),
-		MCRYPT_DEV_URANDOM
-	);
-
+	// using open ssl
+	$cipher="AES-256-CBC";
+	$ivlen = openssl_cipher_iv_length($cipher);
+	$iv = openssl_random_pseudo_bytes( $ivlen );
 	$encrypted = base64_encode(
-		$iv.
-		mcrypt_encrypt(
-			MCRYPT_RIJNDAEL_128,
-			hash('sha256', $key, true),
-			$password,
-			MCRYPT_MODE_CBC,
-			$iv
-		)
+		$iv .
+		openssl_encrypt(
+	  		$password, 
+	  		$cipher, 
+	  		hash('sha256', $key, true), 
+	  		OPENSSL_RAW_DATA,   // OPENSSL_ZERO_PADDING  OPENSSL_RAW_DATA
+	  		$iv
+		)        
 	);
 
 	return $encrypted;
@@ -823,20 +824,21 @@ function psm_password_decrypt($key, $encryptedString)
 		 throw new \InvalidArgumentException('invalid_encryption_key');
 	}
 
+	// using open ssl
 	$data = base64_decode($encryptedString);
-	$iv = substr($data, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC));
-
-	$decrypted = rtrim(
-		mcrypt_decrypt(
-			MCRYPT_RIJNDAEL_128,
-			hash('sha256', $key, true),
-			substr($data, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC)),
-			MCRYPT_MODE_CBC,
-			$iv
-		),
+	$cipher="AES-256-CBC";
+	$ivlen = openssl_cipher_iv_length($cipher);
+	$iv = substr($data, 0, $ivlen);
+	$decrypted = rtrim( 
+		openssl_decrypt(
+			base64_encode(substr($data, $ivlen)), 
+			$cipher, 
+			hash('sha256', $key, true), 
+			OPENSSL_ZERO_PADDING,
+			$iv),
 		"\0"
 	);
-
+	
 	return $decrypted;
 }
 

@@ -167,7 +167,7 @@ $sm_lang = array(
 		'pattern' => 'Søke streng/mønster',
 		'pattern_description' => 'Hvis dette mønsteret ikke er funnet på nettstedet, blir serveren merket online/offline. Vanlige uttrykk er tillatt.',
 		'pattern_online' => 'Mønster indikerer at nettstedet er',
-		'pattern_online_description' => 'Online: Hvis dette mønsteret ikke er funnet på nettstedet, blir serveren merket online. Offline: Hvis dette mønsteret ikke er funnet på nettstedet, blir serveren merket offline.',
+		'pattern_online_description' => 'Online: Hvis dette mønsteret blir funnet på nettstedet, er serverens merke online. Frakoblet: Hvis dette mønsteret ikke blir funnet på nettstedet, flagges serveren offline.',
 		'header_name' => 'Overskriftnavn',
 		'header_value' => 'Overskriftsverdi',
 		'header_name_description' => 'Versalsensitivt.',
@@ -292,7 +292,7 @@ $sm_lang = array(
 		'settings_log' => 'Logg innstillinger',
 		'settings_proxy' => 'Proxy innstillinger',
 		'auto_refresh' => 'Auto-refresh',
-		'auto_refresh_servers' =>
+		'auto_refresh_description' =>
 			'Auto-refresh server side.<br>'.
 			'<span class="small">'.
 			'Tid i sekunder, hvis 0 siden ikke blir oppdatert.'.

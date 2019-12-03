@@ -256,7 +256,7 @@ class ServerController extends AbstractServerController {
 		$clean = array(
 			'label' => trim(strip_tags(psm_POST('label', ''))),
 			'ip' => trim(strip_tags(psm_POST('ip', ''))),
-			'timeout' => (isset($_POST['timeout']) && intval($_POST['timeout']) > 0) ? intval($_POST['timeout']) : null,
+			'timeout' => (isset($_POST['timeout']) && intval($_POST['timeout']) > 0) ? intval($_POST['timeout']) : 10,
 			'website_username' => psm_POST('website_username'),
 			'website_password' => $encrypted_password,
 			'port' => intval(psm_POST('port', 0)),
@@ -460,6 +460,18 @@ class ServerController extends AbstractServerController {
 				'label' => $server_available['label'],
 			);
 		}
+                
+		$tpl_data['last_output_truncated'] = $tpl_data['last_output'];
+		$tpl_data['last_error_output_truncated'] = $tpl_data['last_error_output'];
+                
+		if (strlen($tpl_data['last_output']) > 255) {
+			$tpl_data['last_output_truncated'] = substr($tpl_data['last_output'], 0, 255) . '...';
+		}
+                
+		if (strlen($tpl_data['last_error_output']) > 255) {
+			$tpl_data['last_error_output_truncated'] = substr($tpl_data['last_error_output'], 0, 255) . '...';
+		}
+                
 		return $this->twig->render('module/server/server/view.tpl.html', $tpl_data);
 	}
 

@@ -21,7 +21,7 @@
  * @author      Pepijn Over <pep@mailbox.org>
  * @copyright   Copyright (c) 2008-2017 Pepijn Over <pep@mailbox.org>
  * @license     http://www.gnu.org/licenses/gpl.txt GNU GPL v3
- * @version     Release: v3.2.0
+ * @version     Release: v3.4.1
  * @link        http://www.phpservermonitor.org/
  **/
 
@@ -303,7 +303,7 @@ $sm_lang = array(
 		'settings_log' => 'Preferències de LOG',
 		'settings_proxy' => 'Preferències de Proxy',
 		'auto_refresh' => 'Auto-recàrrega',
-		'auto_refresh_servers' => 'Recarregar automàticament la plana Servidors.<br/><span class="small">Temps en segons, si poseu ZERO la plana no s\'auto-recarregarà.</span>',
+		'auto_refresh_description' => 'Recarregar automàticament la plana Servidors.<br/><span class="small">Temps en segons, si poseu ZERO la plana no s\'auto-recarregarà.</span>',
 		'seconds' => 'segons',
 		'test' => 'Provar',
 		'test_email' => 'S\'enviarà un correu a l\'adreça que teniu al vostre perfil d\'usuari.',

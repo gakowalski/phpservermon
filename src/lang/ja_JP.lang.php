@@ -177,7 +177,7 @@ $sm_lang = array(
 		'pattern' => '文字列/パターンを検索',
 		'pattern_description' => '指定した文字列/パターンが存在しない場合は、「オフライン」としてマークされます。また、標準的な計算式は許可されています。',
 		'pattern_online' => 'パターンがウェブサイトであることを示すパターン: ',
-		'pattern_online_description' => 'オンライン: このパターンがウェブサイトにない場合は、オンラインとしてマークされます。 Offline: このパターンがウェブサイトにない場合は、オフラインとしてマークされます。',
+		'pattern_online_description' => 'オンライン：このパターンがWebサイトにある場合、オンラインとしてマークされます。 オフライン：このパターンがWebサイトにない場合、オフラインとしてマークされます。',
 		'redirect_check' => '別のドメインへのリダイレクト: ',
 		'redirect_check_description' => '別のドメインにリダイレクトするのは通常は悪い兆候です。',
 		'allow_http_status' => 'HTTPステータスコードを許可する',
@@ -309,7 +309,7 @@ $sm_lang = array(
 		'settings_log' => 'ログ設定',
 		'settings_proxy' => 'プロキシ設定',
 		'auto_refresh' => '自動更新',
-		'auto_refresh_servers' =>
+		'auto_refresh_description' =>
 			'サーバーページを自動更新します。<br>'.
 			'<span class="small">'.
 			'時間を秒で指定し、0に設定すると更新しません。'.
