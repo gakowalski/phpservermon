@@ -230,10 +230,10 @@ class User
         // LDAP auth enabled
         if ($dirauthconfig === '1') {
             $ldaplibpath = realpath(
-                PSM_PATH_SRC .
-                '..' . DIRECTORY_SEPARATOR .
+                PSM_PATH_SRC . '..' . DIRECTORY_SEPARATOR .
                 'vendor' . DIRECTORY_SEPARATOR .
-                'PsmLDAPauth' . DIRECTORY_SEPARATOR .
+                'viharm' . DIRECTORY_SEPARATOR .
+                'psm-ldap-auth' . DIRECTORY_SEPARATOR .
                 'psmldapauth.php'
             );
             
