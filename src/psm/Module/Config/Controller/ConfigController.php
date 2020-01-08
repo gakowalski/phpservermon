@@ -52,6 +52,8 @@ class ConfigController extends AbstractController
         'log_telegram',
         'show_update',
         'combine_notifications',
+        'dirauth_status',
+        'authdir_ldapfollowref',
     );
 
     /**
@@ -73,6 +75,17 @@ class ConfigController extends AbstractController
         'sms_from',
         'pushover_api_token',
         'telegram_api_token',
+        'authdir_host_locn',
+        'authdir_host_port',
+        'authdir_userdomain',
+        'authdir_ldapver',
+        'authdir_basedn',
+        'authdir_usernameattrib',
+        'authdir_groupnameattrib',
+        'authdir_groupmemattrib',
+        'authdir_usercontainerrdn',
+        'authdir_groupcontainerrdn',
+        'authdir_groupname',
     );
 
     private $default_tab = 'general';
