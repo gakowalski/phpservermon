@@ -408,6 +408,7 @@ class ConfigController extends AbstractController
             'label_tab_sms' => psm_get_lang('config', 'tab_sms'),
             'label_tab_pushover' => psm_get_lang('config', 'tab_pushover'),
             'label_tab_telegram' => psm_get_lang('config', 'tab_telegram'),
+            'label_tab_auth' => psm_get_lang('config', 'tab_auth'),
             'label_settings_email' => psm_get_lang('config', 'settings_email'),
             'label_settings_sms' => psm_get_lang('config', 'settings_sms'),
             'label_settings_pushover' => psm_get_lang('config', 'settings_pushover'),

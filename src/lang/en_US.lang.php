@@ -383,6 +383,7 @@ $sm_lang = array(
         'tab_sms' => 'SMS',
         'tab_pushover' => 'Pushover',
         'tab_telegram' => 'Telegram',
+        'tab_auth' => 'Authentication',
         'settings_email' => 'Email settings',
         'settings_sms' => 'Text message settings',
         'settings_pushover' => 'Pushover settings',
@@ -390,6 +391,7 @@ $sm_lang = array(
         'settings_notification' => 'Notification settings',
         'settings_log' => 'Log settings',
         'settings_proxy' => 'Proxy settings',
+        'settings_dirauth' => 'LDAP settings',
         'auto_refresh' => 'Auto-refresh',
         'auto_refresh_description' => 'Auto-refresh servers page.<br><span class="small">Time in seconds, if 0 the
  page won\'t refresh.</span>',

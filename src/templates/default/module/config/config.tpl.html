@@ -8,6 +8,11 @@
                 label_general }}</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link {{ auth_active }}" id="config-auth-tab" data-toggle="tab" href="#config-auth" role="tab"
+                aria-controls="config-auth" aria-selected="{% if auth_active %}true{% else %}false{% endif %}">{{
+                    label_tab_auth }}</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link {{ email_active }}" id="config-email-tab" data-toggle="tab" href="#config-email" role="tab"
                 aria-controls="config-email" aria-selected="{% if email_active %}true{% else %}false{% endif %}">{{
                 label_tab_email }}</a>
