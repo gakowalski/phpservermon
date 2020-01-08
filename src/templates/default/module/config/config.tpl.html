@@ -94,7 +94,7 @@
                 <!-- Active Directory domain -->
                 {{ macro.input_field("text", "authdir_userdomain", null, "authdir_userdomain", label_authdir_userdomain, authdir_userdomain, label_authdir_userdomain, "100", "authdir_userdomain_help", label_authdir_userdomain_description) }}
                 <!-- LDAP protecol version -->
-                {{ macro.input_field("text", "authdir_ldapver", null, "authdir_ldapver", label_authdir_ldapver, authdir_ldapver, 3, "100", "authdir_ldapver_help", label_authdir_ldapver_description) }}
+                {{ macro.input_field("text", "authdir_ldapver", null, "authdir_ldapver", label_authdir_ldapver, authdir_ldapver, label_authdir_ldapver, "100", "authdir_ldapver_help", label_authdir_ldapver_description) }}
                 <!-- Follow referrals -->
                 {{ macro.input_checkbox("authdir_ldapfollowref", "authdir_ldapfollowref[]", label_authdir_ldapfollowref, authdir_ldapfollowref_checked, "authdir_ldapfollowref_help", label_authdir_ldapfollowref_description) }}
                 <!-- Base DN* -->
