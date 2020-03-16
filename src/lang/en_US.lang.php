@@ -161,6 +161,7 @@ $sm_lang = array(
         'sms' => 'SMS',
         'pushover' => 'Pushover',
         'telegram' => 'Telegram',
+        'discord' => 'Discord',
         'no_logs' => 'No logs',
         'clear' => 'Clear log',
         'delete_title' => 'Delete log',
@@ -421,6 +422,12 @@ $sm_lang = array(
         'telegram_error_notoken' => 'Unable to send test notification: no Telegram API token found in the global
  configuration.',
         'telegram_error_noid' => 'Unable to send test notification: no chat id found in your profile.',
+        // DISCORD
+        'discord_sent' => 'Discord notification sent',
+        'discord_error' => 'An error has occurred while sending the Discord notification: %s',
+        'discord_error_nowebhook' => 'Unable to send test notification: no Discord Webhook URL found in the global configuration.',
+        'discord_error_noid' => 'Unable to send test notification: no chat id found in your profile.',
+        // END DISCORD
         'log_retention_period' => 'Log retention period',
         'log_retention_period_description' => 'Number of days to keep logs of notifications and archives of server
  uptime. Enter 0 to disable log cleanup.',
@@ -436,6 +443,15 @@ $sm_lang = array(
  %IP%<br>Port: %PORT%<br>Error: %ERROR%<br>Date: %DATE%',
         'off_telegram_message' => 'Failed to connect to the following server:<br><br>Server: %LABEL%<br>IP:
  %IP%<br>Port: %PORT%<br>Error: %ERROR%<br>Date: %DATE%',
+        'off_discord_message' => 'Failed to connect to the following server:
+```
+Server: %LABEL%
+IP: %IP%
+Port: %PORT%
+Error: %ERROR%
+Date: %DATE%
+```
+',
         'on_sms' => 'Server \'%LABEL%\' is RUNNING: ip=%IP%, port=%PORT%, it was down for %LAST_OFFLINE_DURATION%',
         'on_email_subject' => 'IMPORTANT: Server \'%LABEL%\' is RUNNING',
         'on_email_body' => 'Server \'%LABEL%\' is running again, it was down for
@@ -448,6 +464,14 @@ $sm_lang = array(
         'on_telegram_message' => 'Server \'%LABEL%\' is running again, it was down for:
  %LAST_OFFLINE_DURATION%<br><br>Server: %LABEL%<br>IP: %IP%<br>Port: %PORT%<br>Date:
  %DATE%',
+        'on_discord_message' => 'Server `%LABEL%` is running again, it was down for:
+ %LAST_OFFLINE_DURATION%
+```
+Server: %LABEL%
+IP: %IP%
+Port: %PORT%
+Date: %DATE%
+```',
         'combi_off_email_message' => '<ul><li>Server: %LABEL%</li><li>IP: %IP%</li><li>Port: %PORT%</li><li>Error:
  %ERROR%</li><li>Date: %DATE%</li></ul>',
         'combi_off_pushover_message' => '<ul><li>Server: %LABEL%</li><li>IP: %IP%</li><li>Port: %PORT%</li><li>Error:

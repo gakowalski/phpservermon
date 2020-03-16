@@ -88,7 +88,7 @@ class LogController extends AbstractServerController
             );
         }
 
-        $log_types = array('status', 'email', 'sms', 'pushover', 'telegram');
+        $log_types = array('status', 'email', 'sms', 'pushover', 'telegram', 'discord');
 
         foreach ($log_types as $key) {
             $records = $this->getEntries($key);

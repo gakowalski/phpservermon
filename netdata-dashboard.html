@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<html lang="en">
+<head>
+    <title>NetData T2GCorp Dashboard/</title>
+    <meta name="application-name" content="netdata">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+</head>
+<script>
+    // var netdataTheme = 'default'; // this is white
+    var netdataTheme = 'slate'; // this is dark
+</script>
+
+<!--
+    Load dashboard.js
+    to host this HTML file on your web server,
+    you have to load dashboard.js from the netdata server.
+    So, pick one the two below
+    If you pick the first, set the server name/IP.
+    The second assumes you host this file on /usr/share/netdata/web
+    and that you have chown it to be owned by netdata:netdata
+-->
+<script type="text/javascript" src="https://nd-logstash.t2gcorp.com/dashboard.js"></script>
+<!--<script type="text/javascript" src="dashboard.js?v20190902-0"></script>-->
+
+<script>
+    // Set options for TV operation
+    // This has to be done, after dashboard.js is loaded
+
+    // destroy charts not shown (lowers memory on the browser)
+    NETDATA.options.current.destroy_on_hide = false;
+
+    // set this to false, to always show all dimensions
+    NETDATA.options.current.eliminate_zero_dimensions = true;
+
+    // lower the pressure on this browser
+    NETDATA.options.current.concurrent_refreshes = false;
+
+    // if the tv browser is too slow (a pi?)
+    // set this to false
+    NETDATA.options.current.parallel_refresher = true;
+
+    // always update the charts, even if focus is lost
+    // NETDATA.options.current.stop_updates_when_focus_is_lost = false;
+
+    // Since you may render charts from many servers and any of them may
+    // become offline for some time, the charts will break.
+    // This will reload the page every RELOAD_EVERY minutes
+    // var RELOAD_EVERY = 5;
+    // setTimeout(function(){
+    //     location.reload();
+    // }, RELOAD_EVERY * 60 * 1000);
+
+    const Dashboard = {
+        tabs: [],
+        tabMenuTemplate: `
+            <li role="presentation">
+                <a href="#{{ name }}" aria-controls="{{ name }}" role="tab" data-toggle="tab">{{ title }}</a>
+            </li>
+        `,
+        tabContentTemplate: `
+        <div role="sectionhead">
+            <h3 id="menu_system" role="heading">
+                <a href="{{ url }}" target="_blank">
+                    <svg style="max-width: 24px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="server" class="svg-inline--fa fa-server fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M480 160H32c-17.673 0-32-14.327-32-32V64c0-17.673 14.327-32 32-32h448c17.673 0 32 14.327 32 32v64c0 17.673-14.327 32-32 32zm-48-88c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24zm-64 0c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24zm112 248H32c-17.673 0-32-14.327-32-32v-64c0-17.673 14.327-32 32-32h448c17.673 0 32 14.327 32 32v64c0 17.673-14.327 32-32 32zm-48-88c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24zm-64 0c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24zm112 248H32c-17.673 0-32-14.327-32-32v-64c0-17.673 14.327-32 32-32h448c17.673 0 32 14.327 32 32v64c0 17.673-14.327 32-32 32zm-48-88c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24zm-64 0c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24z"></path></svg>
+                    {{ name }}
+                </a>
+            </h3>
+        </div>
+        <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+            <div
+                    data-host="{{ url }}"
+                    class="netdata-container-easypiechart" style="margin-right: 10px; width: 13%;"
+                 data-netdata="system.io" data-dimensions="in" data-chart-library="easypiechart"
+                 data-title="Disk Read" data-width="13%" data-before="0" data-after="-360" data-points="360"
+                 data-common-units="system.io.mainhead" role="application"></div>
+            <div
+                    data-host="{{ url }}"
+                    class="netdata-container-easypiechart" style="margin-right: 10px; width: 13%;"
+                 data-netdata="system.io" data-dimensions="out" data-chart-library="easypiechart"
+                 data-title="Disk Write" data-width="13%" data-before="0" data-after="-360" data-points="360"
+                 data-common-units="system.io.mainhead" role="application"></div>
+            <div
+                    data-host="{{ url }}"
+                    class="netdata-container-gauge" style="margin-right: 10px; width: 22%;" data-netdata="system.cpu"
+                 data-chart-library="gauge" data-title="CPU" data-units="%" data-gauge-max-value="100"
+                 data-width="20%" data-after="-360" data-points="360" data-colors="#22AA99"
+                 role="application"></div>
+            <div
+                    data-host="{{ url }}"
+                    class="netdata-container-easypiechart" style="margin-right: 10px; width: 13%;"
+                 data-netdata="system.net" data-dimensions="received" data-chart-library="easypiechart"
+                 data-title="Net Inbound" data-width="13%" data-before="0" data-after="-360" data-points="360"
+                 data-common-units="system.net.mainhead" role="application"></div>
+            <div
+                    data-host="{{ url }}"
+                    class="netdata-container-easypiechart" style="margin-right: 10px; width: 13%;"
+                 data-netdata="system.net" data-dimensions="sent" data-chart-library="easypiechart"
+                 data-title="Net Outbound" data-width="13%" data-before="0" data-after="-360" data-points="360"
+                 data-common-units="system.net.mainhead" role="application"></div>
+            <div
+                    data-host="{{ url }}"
+                    class="netdata-container-easypiechart" style="margin-right: 10px; width: 13%;"
+                 data-netdata="system.ram" data-dimensions="used|buffers|active|wired"
+                 data-append-options="percentage" data-chart-library="easypiechart" data-title="Used RAM"
+                 data-units="%" data-easypiechart-max-value="100" data-width="13%" data-after="-360"
+                 data-points="360" data-colors="#EE9911" role="application"></div>
+            </div>
+                 <br><br>
+            <div data-host="{{ url }}" class="netdata-container-with-legend" data-netdata="system.load" data-width="100%" data-height="125.99999999999999px" data-dygraph-valuerange="[null, null]" data-before="0" data-after="-360" data-colors="" data-decimal-digits="-1" role="application" style="width: 100%; height: 126px; will-change: transform;">
+        </div>
+        <hr>
+        `,
+        createGroup: function (name, title, hosts) {
+            Dashboard.tabs.push({
+                name,
+                title,
+                hosts
+            });
+        },
+        createHost: function (url, name) {
+            return {url, name};
+        },
+        renderTab: function (group) {
+            let content = Dashboard.tabMenuTemplate.replace(/{{ name }}/g, group.name);
+            content = content.replace(/{{ title }}/g, group.title);
+
+            return content;
+        },
+        renderTabContainer: function (name) {
+            return `<div role="tabpanel" class="tab-pane" id="` + name + `"></div>`;
+        },
+        renderHost: function (group, host) {
+            let content = Dashboard.tabContentTemplate.replace(/{{ url }}/g, host.url);
+            content = content.replace(/{{ group }}/g, group);
+            content = content.replace(/{{ name }}/g, host.name);
+
+            return content;
+        },
+        render: function () {
+            Dashboard.tabs.forEach((tab) => {
+                $('ul.nav').append(Dashboard.renderTab(tab));
+                $('div.tab-content').append(Dashboard.renderTabContainer(tab.name));
+                tab.hosts.forEach((host) => {
+                    $('#' + tab.name).append(Dashboard.renderHost(tab.name, host));
+                });
+            });
+            setTimeout(() => {
+                $('ul li:eq(0)').addClass('active');
+                $('div.tab-content>div:eq(0)').addClass('active');
+            }, 500);
+        }
+    };
+
+</script>
+<body>
+<div class="container-fluid">
+    <ul class="nav nav-tabs" role="tablist">
+
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+
+    </div>
+</div>
+<script>
+    let devopsHosts = [
+        Dashboard.createHost('https://nd-devops.t2gcorp.com', 'Kibana'),
+        Dashboard.createHost('https://nd-logstash.t2gcorp.com', 'Logstash'),
+    ];
+    let c01Hosts = [
+        Dashboard.createHost('https://nd5-c01.t2gcorp.com', 'S5 Hoa Sơn',),
+        Dashboard.createHost('https://nd4-c01.t2gcorp.com', 'S4 Lương Sơn',),
+        Dashboard.createHost('https://nd3-c01.t2gcorp.com', 'S3 Phật Sơn'),
+        Dashboard.createHost('https://nd2-c01.t2gcorp.com', 'S2 Đại Thiên Sơn'),
+    ];
+    let c02Hosts = [
+        Dashboard.createHost('https://nd4-c02.t2gcorp.com', 'S4 Chu Tiên Trấn'),
+        Dashboard.createHost('https://nd3-c02.t2gcorp.com', 'S3 Nam Nhạc Trấn'),
+        Dashboard.createHost('https://nd2-c02.t2gcorp.com', 'S2 Ba Lăng Huyện'),
+    ];
+    let webHosts = [
+        Dashboard.createHost('https://nd-webc01.t2gcorp.com', 'Web C01'),
+        Dashboard.createHost('https://nd-webc02.t2gcorp.com', 'Web C02'),
+    ];
+    Dashboard.createGroup('elk', 'ELK', devopsHosts);
+    Dashboard.createGroup('c01', 'C01', c01Hosts);
+    Dashboard.createGroup('c02', 'C02', c02Hosts);
+    Dashboard.createGroup('webs', 'Webs', webHosts);
+    Dashboard.render();
+</script>
+</body>
+</html>

@@ -17,7 +17,8 @@
         "php-pushover/php-pushover": "dev-master",
         "paragonie/random_compat": "^2.0",
         "twig/twig": "~1.35",
-        "viharm/psm-ldap-auth": "^1.1"
+        "viharm/psm-ldap-auth": "^1.1",
+				"guzzlehttp/guzzle": "^6.5"
     },
     "autoload": {
         "files": [

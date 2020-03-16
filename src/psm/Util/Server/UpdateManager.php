@@ -64,7 +64,7 @@ class UpdateManager implements ContainerAwareInterface
         }
 
         $sql = "SELECT `s`.`server_id`,`s`.`ip`,`s`.`port`,`s`.`label`,`s`.`type`,`s`.`pattern`,`s`.`header_name`,
-            `s`.`header_value`,`s`.`status`,`s`.`active`,`s`.`email`,`s`.`sms`,`s`.`pushover`,`s`.`telegram`
+            `s`.`header_value`,`s`.`status`,`s`.`active`,`s`.`email`,`s`.`sms`,`s`.`pushover`,`s`.`telegram`, `s`.`discord`, `s`.`maintenance_time`
 				FROM `" . PSM_DB_PREFIX . "servers` AS `s`
 				{$sql_join}
 				WHERE `active`='yes' ";
@@ -75,6 +75,10 @@ class UpdateManager implements ContainerAwareInterface
         $notifier = new Updater\StatusNotifier($this->container->get('db'));
 
         foreach ($servers as $server) {
+            // a dirty hack to skip update status on maintenance time
+            if ($this->isInMaintenance($server)) {
+                continue;
+            }
             $status_old = ($server['status'] == 'on') ? true : false;
             $status_new = $updater->update($server['server_id']);
             // notify the nerds if applicable
@@ -87,5 +91,30 @@ class UpdateManager implements ContainerAwareInterface
         if ($notifier->combine) {
             $notifier->notifyCombined();
         }
+    }
+
+    /**
+     * @param $server
+     *
+     * @return bool
+     */
+    private function isInMaintenance($server)
+    {
+        // $server['maintenance_time'] has format '16:30 - 17:00'
+        if (empty($server['maintenance_time'])) {
+            return false;
+        }
+        $time = intval(date('Hi'));
+        $splitted = explode('-', $server['maintenance_time']);
+        if (count($splitted) != 2) {
+            return false;
+        }
+        $maintenanceStart = intval(str_replace(':', '', trim($splitted[0])));
+        $maintenanceEnd = intval(str_replace(':', '', trim($splitted[1])));
+        if ($time > $maintenanceStart && $time < $maintenanceEnd) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -161,6 +161,7 @@ class UserController extends AbstractController
             'pushover_key',
             'pushover_device',
             'telegram_id',
+            'discord_webhook_url',
             'email',
             'api_hash'
         );
@@ -258,6 +259,7 @@ class UserController extends AbstractController
             'pushover_key',
             'pushover_device',
             'telegram_id',
+            'discord_webhook_url',
             'email',
             'api_hash'
         );

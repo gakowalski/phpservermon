@@ -207,6 +207,7 @@ class Installer
 				`pushover_key` varchar(255) NOT NULL,
 				`pushover_device` varchar(255) NOT NULL,
 				`telegram_id` varchar(255) NOT NULL,
+				`discord_webhook_url` varchar(255) NOT NULL,
 				`email` varchar(255) NOT NULL,
                 PRIMARY KEY (`user_id`),
                 UNIQUE KEY `unique_username` (`user_name`)
@@ -262,6 +263,7 @@ class Installer
 				`sms` enum('yes','no') NOT NULL default 'no',
 				`pushover` enum('yes','no') NOT NULL default 'yes',
 				`telegram` enum('yes','no') NOT NULL default 'yes',
+				`discord` enum('yes','no') NOT NULL default 'yes',
 			    `warning_threshold` mediumint(1) unsigned NOT NULL DEFAULT '1',
 			    `warning_threshold_counter` mediumint(1) unsigned NOT NULL DEFAULT '0',
 			    `timeout` smallint(1) unsigned NULL DEFAULT NULL,
@@ -270,6 +272,7 @@ class Installer
 				`last_error` varchar(255) DEFAULT NULL,
 				`last_error_output` TEXT,
 				`last_output` TEXT,
+				`maintenance_time` varchar(100),
 				PRIMARY KEY  (`server_id`)
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8;",
             PSM_DB_PREFIX . 'servers_uptime' => "CREATE TABLE IF NOT EXISTS `" . PSM_DB_PREFIX . "servers_uptime` (

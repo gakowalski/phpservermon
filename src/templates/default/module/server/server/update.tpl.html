@@ -140,6 +140,10 @@
 			{{ macro.input_select_monitoring("pushover", "pushover", label_send_pushover, edit_pushover_selected, label_yes, label_no, warning_pushover, label_warning_pushover) }}
 			<!-- Telegram -->
 			{{ macro.input_select_monitoring("telegram", "telegram", label_send_telegram, edit_telegram_selected, label_yes, label_no, warning_telegram, label_warning_telegram) }}
+			<!-- Discord -->
+			{{ macro.input_select_monitoring("discord", "discord", "Send Discord notification", edit_discord_selected, label_yes, label_no, warning_discord, label_warning_discord) }}
+			<!-- Maintenance time -->
+			{{ macro.input_field("text", "maintenance_time", null, "maintenance_time", "Maintenance time", edit_value_maintenance_time, null, "255", 'maintenance_time', 'Example: <b>16:30 - 17:00</b>', null, null, true) }}
 		</div>
 	</fieldset>
 	<fieldset>

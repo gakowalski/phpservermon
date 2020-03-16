@@ -69,6 +69,12 @@ class StatusNotifier
     protected $send_telegram = false;
 
     /**
+     * Send discord?
+     * @var boolean $send_discord
+     */
+    protected $send_discord = false;
+
+    /**
      * Save log records?
      * @var boolean $save_log
      */
@@ -123,6 +129,7 @@ class StatusNotifier
         $this->send_sms = psm_get_conf('sms_status');
         $this->send_pushover = psm_get_conf('pushover_status');
         $this->send_telegram = psm_get_conf('telegram_status');
+        $this->send_discord = psm_get_conf('discord_status');
         $this->save_logs = psm_get_conf('log_status');
         $this->combine = psm_get_conf('combine_notifications');
     }
@@ -143,6 +150,7 @@ class StatusNotifier
             !$this->send_sms &&
             !$this->send_pushover &&
             !$this->send_telegram &&
+            !$this->send_discord &&
             !$this->save_logs
         ) {
             // seems like we have nothing to do. skip the rest
@@ -168,6 +176,7 @@ class StatusNotifier
             'sms',
             'pushover',
             'telegram',
+            'discord',
             'last_online',
             'last_offline',
             'last_offline_duration',
@@ -245,6 +254,10 @@ class StatusNotifier
         // check if telegram is enabled for this server
         if ($this->send_telegram && $this->server['telegram'] == 'yes') {
             $this->combine ? $this->setCombi('telegram') : $this->notifyByTelegram($users);
+        }
+        // check if discord is enabled for this server
+        if ($this->send_discord && $this->server['discord'] == 'yes') {
+            $this->combine ? $this->setCombi('discord') : $this->notifyByDiscord($users);
         }
 
         return $notify;
@@ -549,6 +562,51 @@ class StatusNotifier
     }
 
     /**
+     * This functions performs the Discord notifications
+     *
+     * @param \PDOStatement $users
+     * @param array         $combi contains message and subject (optional)
+     *
+     * @return void
+     * @throws \Exception
+     */
+    protected function notifyByDiscord($users, $combi = array())
+    {
+        // Remove users that have no discord_webhook_url
+        foreach ($users as $k => $user) {
+            if (trim($user['discord_webhook_url']) == '') {
+                unset($users[$k]);
+            }
+        }
+
+        // Validation
+        if (empty($users)) {
+            return;
+        }
+
+        // Discord
+        $message = key_exists('message', $combi) ?
+            $combi['message'] :
+            psm_parse_msg($this->status_new, 'discord_message', $this->server);
+
+
+        // Log
+        if (psm_get_conf('log_discord')) {
+            $log_id = psm_add_log($this->server_id, 'discord', $message);
+        }
+
+        foreach ($users as $user) {
+            $discord = psm_build_discord($user['discord_webhook_url']);
+            // Log
+            if (!empty($log_id)) {
+                psm_add_log_user($log_id, $user['user_id']);
+            }
+            $color = $this->status_new ? \DiscordWebHookClient::EMBED_COLOR_INFO : \DiscordWebHookClient::EMBED_COLOR_CRITICAL;
+            $discord->send($message, $color);
+        }
+    }
+
+    /**
      * Get all users for the provided server id
      * @param int $server_id
      * @return \PDOStatement array
@@ -558,7 +616,7 @@ class StatusNotifier
         // find all the users with this server listed
         $users = $this->db->query("
             SELECT `u`.`user_id`, `u`.`name`,`u`.`email`, `u`.`mobile`, `u`.`pushover_key`,
-                `u`.`pushover_device`, `u`.`telegram_id`
+                `u`.`pushover_device`, `u`.`telegram_id`, `u`.`discord_webhook_url`
 			FROM `" . PSM_DB_PREFIX . "users` AS `u`
 			JOIN `" . PSM_DB_PREFIX . "users_servers` AS `us` ON (
 				`us`.`user_id`=`u`.`user_id`

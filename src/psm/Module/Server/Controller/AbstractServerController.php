@@ -86,6 +86,7 @@ abstract class AbstractServerController extends AbstractController
 					`s`.`sms`,
 					`s`.`pushover`,
 					`s`.`telegram`,
+					`s`.`discord`,
 					`s`.`warning_threshold`,
 					`s`.`warning_threshold_counter`,
 					`s`.`ssl_cert_expiry_days`,
@@ -96,7 +97,8 @@ abstract class AbstractServerController extends AbstractController
 					`s`.`last_error_output`,
 					`s`.`last_output`,
 					`s`.`environment_id`,
-					`e`.`name` as environment_name
+					`e`.`name` as environment_name,
+          `s`.`maintenance_time`
 				FROM `".PSM_DB_PREFIX."servers` AS `s`
 				{$sql_join}
 				{$sql_environments_join}
