@@ -309,6 +309,53 @@ $sm_lang = array(
         'telegram_api_token' => 'Telegram API Token',
         'telegram_api_token_description' => 'Before you can use Telegram, you need to get a API token. Visit the <a
  href="http://docs.phpservermonitor.org/">documentation</a> for help.',
+        'dirauth_status' => 'Authenticate with directory service',
+        'authdir_host_locn' => 'Directory host',
+        'authdir_host_port' => 'Directory port',
+        'authdir_type' => 'Service type',
+        'authdir_type_description' => 'OpenLDAP: Directory is an OpenLDAP service.<br>AD
+ DS: Directory is an Active Directory Domain Service.<br>AD
+ LDS: Directory is an Active Directory Lightweight Directory
+ Service.',
+        'authdir_type_openldap' => 'OpenLDAP',
+        'authdir_type_adds' => 'AD DS',
+        'authdir_type_adlds' => 'AD LDS',
+        'authdir_userdomain' => 'Active Directory domain',
+        'authdir_userdomain_description' => 'User domain for Active Directory. This is typically the NETBIOS domain
+ for AD DS and the DNS domain for AD LDS. Not used for OpenLDAP
+ directories.',
+        'authdir_ldapver' => 'LDAP protocol version',
+        'authdir_ldapver_description' => 'Version of the LDAP specification. This is typically Version 3 (default).
+ Version 2 was deprecated in 2003 (RFC3494).',
+        'authdir_ldapfollowref' => 'Follow referrals',
+        'authdir_ldapfollowref_description' => 'Follow referrals if the specified server refers to another server for
+ the required information. Leave unchecked if you are unaware of this
+ functionality.',
+        'authdir_basedn' => 'Base DN*',
+        'authdir_basedn_description' => 'Base distinguished name (DN) of the directory service. E.g.,
+ dc=domain,dc=tld. This is a required field.',
+        'authdir_usernameattrib' => 'Username attribute',
+        'authdir_usernameattrib_description' => 'Attribute used by the directory service to refer to the username of
+ the user.',
+        'authdir_groupnameattrib' => 'Group name attribute',
+        'authdir_groupnameattrib_description' => 'Attribute used by the directory service to refer to the group name
+ of a group. This is used to check for group membership.',
+        'authdir_groupmemattrib' => 'Group member attribute',
+        'authdir_groupmemattrib_description' => 'Attribute used by the directory service to refer to the group(s) of
+ which the user is a member. This is used to check for group
+ membership.',
+        'authdir_usercontainerrdn' => 'User container RDN',
+        'authdir_usercontainerrdn_description' => 'Relative distinguished name of the users container in the
+ directory. E.g., ou=Users',
+        'authdir_groupcontainerrdn' => 'Group container RDN',
+        'authdir_groupcontainerrdn_description' => 'Relative distinguished name of the groups container in the
+ directory. E.g., ou=Groups',
+        'authdir_groupname' => 'Authorised directory group',
+        'authdir_groupname_description' => 'Directory group authorised to access application. Directory users not
+ members of this group will not be authenticated (currently not available
+ for AD).',
+        'authdir_defaultrole' => 'Default role',
+        'authdir_defaultrole_description' => 'Default role to be assigned to users logging in for the first time.',
         'alert_type' => 'Select when you\'d like to be notified.',
         'alert_type_description' => '<b>Status change:</b> You will receive a notification when a server has a change
  in status. So from online -> offline or offline -> online.<br><br><b>Offline:</b>
@@ -337,6 +384,7 @@ $sm_lang = array(
         'tab_sms' => 'SMS',
         'tab_pushover' => 'Pushover',
         'tab_telegram' => 'Telegram',
+        'tab_auth' => 'Authentication',
         'settings_email' => 'Email settings',
         'settings_sms' => 'Text message settings',
         'settings_pushover' => 'Pushover settings',
@@ -344,6 +392,7 @@ $sm_lang = array(
         'settings_notification' => 'Notification settings',
         'settings_log' => 'Log settings',
         'settings_proxy' => 'Proxy settings',
+        'settings_dirauth' => 'LDAP settings',
         'auto_refresh' => 'Auto-refresh',
         'auto_refresh_description' => 'Auto-refresh servers page.<br><span class="small">Time in seconds, if 0 the
  page won\'t refresh.</span>',

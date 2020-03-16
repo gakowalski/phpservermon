@@ -30,11 +30,9 @@
 namespace psm\Module;
 
 use psm\Service\Database;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-interface ControllerInterface extends ContainerAwareInterface
+interface ControllerInterface
 {
-
     public function __construct(Database $db, \Twig_Environment $twig);
 
     /**
