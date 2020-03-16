@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHP Server Monitor
  * Monitor your servers and websites.
@@ -24,36 +23,21 @@
  * @license     http://www.gnu.org/licenses/gpl.txt GNU GPL v3
  * @version     Release: @package_version@
  * @link        http://www.phpservermonitor.org/
- * @since       phpservermon 3.2
  **/
 
-namespace psm\Module\User\EventListener;
+require __DIR__.'/../src/bootstrap.php';
+ 
+$router->setIsApi(true);
 
-use psm\Module\User\UserEvents;
-use psm\Module\User\Event\UserEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+psm_no_cache();
 
-class UserSubscriber implements EventSubscriberInterface
-{
+$mod = psm_GET('mod');
 
-    public static function getSubscribedEvents()
-    {
-        return array(
-            UserEvents::USER_ADD => array('onUserAdd', 0),
-            UserEvents::USER_EDIT => array('onUserEdit', 0),
-            UserEvents::USER_DELETE => array('onUserDelete', 0),
-        );
-    }
-
-    public function onUserAdd(UserEvent $event)
-    {
-    }
-
-    public function onUserEdit(UserEvent $event)
-    {
-    }
-
-    public function onUserDelete(UserEvent $event)
-    {
-    }
+try {
+	$router->run($mod);
+} catch (\InvalidArgumentException $e) {
+	// invalid module, try the default one
+	// it that somehow also doesnt exist, we have a bit of an issue
+	// and we really have no reason catch it
+	$router->run(PSM_MODULE_DEFAULT);
 }

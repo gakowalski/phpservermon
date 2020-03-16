@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHP Server Monitor
  * Monitor your servers and websites.
